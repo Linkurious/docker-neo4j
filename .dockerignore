@@ -1,0 +1,8 @@
+.git
+.gitignore
+Jenkinsfile
+Dockerfile*
+.*.swp
+docker-compose*
+.dockerignore
+node_modules
