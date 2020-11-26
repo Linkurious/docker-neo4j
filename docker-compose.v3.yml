@@ -22,7 +22,7 @@ services:
       - NEO4J_AUTH=neo4j/neo3j
       - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
       - NEO4J_dbms_connector_https_advertised__address=neo4j.${TRAEFIK_HOST}:443
-      - NEO4J_dbms_connector_bolt_advertised__address=neo4jdb.${TRAEFIK_HOST}:443
+      - NEO4J_dbms_connector_bolt_advertised__address=neo4jbolt.${TRAEFIK_HOST}:443
     ports:
       - "7473:7473"  # https
       - "7474:7474"  # http
@@ -35,15 +35,15 @@ services:
       - "traefik.http.routers.neo4j-secure.entrypoints=https"
       - "traefik.http.routers.neo4j-secure.rule=Host(`neo4j.${TRAEFIK_HOST}`)"
       - traefik.http.routers.neo4j-secure.tls.certresolver=gandi-cr
-        # - "traefik.http.services.neo4jdb-secure.loadbalancer.server.port=7687"
-        # - "traefik.http.routers.neo4jdb-secure.service=neo4jdb-secure"
-        # - "traefik.http.routers.neo4jdb-secure.entrypoints=https"
-        # - "traefik.http.routers.neo4jdb-secure.rule=Host(`neo4jdb.${TRAEFIK_HOST}`)"
-      - traefik.tcp.services.neo4jdb.loadbalancer.server.port=7687
-      - traefik.tcp.routers.neo4jdb.rule=HostSNI(`neo4jdb.${TRAEFIK_HOST}`)
-      - traefik.tcp.routers.neo4jdb.service=neo4jdb
-      - traefik.tcp.routers.neo4jdb.tls=true
-      - traefik.tcp.routers.neo4jdb.tls.certresolver=gandi-cr
+        # - "traefik.http.services.neo4jbolt-secure.loadbalancer.server.port=7687"
+        # - "traefik.http.routers.neo4jbolt-secure.service=neo4jbolt-secure"
+        # - "traefik.http.routers.neo4jbolt-secure.entrypoints=https"
+        # - "traefik.http.routers.neo4jbolt-secure.rule=Host(`neo4jbolt.${TRAEFIK_HOST}`)"
+      - traefik.tcp.services.neo4jbolt.loadbalancer.server.port=7687
+      - traefik.tcp.routers.neo4jbolt.rule=HostSNI(`neo4jbolt.${TRAEFIK_HOST}`)
+      - traefik.tcp.routers.neo4jbolt.service=neo4jbolt
+      - traefik.tcp.routers.neo4jbolt.tls=true
+      - traefik.tcp.routers.neo4jbolt.tls.certresolver=gandi-cr
     networks:
       - traefik_network
 
