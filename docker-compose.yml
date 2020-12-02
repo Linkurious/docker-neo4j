@@ -7,8 +7,6 @@ services:
     # depends_on:
     #  - plugins-neo4j
     restart: unless-stopped
-    volumes:
-      - neo4j_data:/data
     env_file: ".env.neo4j.${RUN_ENV}"
     environment:
       - NEO4J_dbms_security_procedures_unrestricted=\*.\*
@@ -19,10 +17,6 @@ services:
       - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
       - NEO4J_dbms_connector_https_advertised__address=${PREFIX}neo4j.${TRAEFIK_HOST}:443
       - NEO4J_dbms_connector_bolt_advertised__address=${PREFIX}neo4jbolt.${TRAEFIK_HOST}:443
-    ports:
-      - "7473:7473"  # https
-      - "7474:7474"  # http
-      - "7687:7687"  # bolt
     labels:
       - "traefik.docker.network=traefik_network"
       - "traefik.enable=true"
@@ -42,9 +36,6 @@ services:
       - traefik.tcp.routers.neo4jbolt.tls.certresolver=gandi-cr
     networks:
       - traefik_network
-
-volumes:
-  neo4j_data:
 
 networks:
   traefik_network:
