@@ -3,11 +3,12 @@ version: '3.7'
 
 services:
   neo4j:
-    image: neo4j:${NEO4J_VERSION:-3.5.15-enterprise}
+    image: neo4j:${NEO4J_VERSION:-4.2.0-enterprise}
     # depends_on:
     #  - plugins-neo4j
     restart: unless-stopped
     env_file: ".env.neo4j.${RUN_ENV}"
+    user: "${NEO4J_USER:-7474}:${NEO4J_USER:-7474}"
     environment:
       - NEO4J_dbms_security_procedures_unrestricted=\*.\*
         #- NEO4J_apoc_import_file_enabled=true
