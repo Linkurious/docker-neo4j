@@ -1,0 +1,7 @@
+---
+version: '3.7'
+
+services:
+  neo4j:
+    volumes:
+      - /data/neo4j/${PREFIX}/data:/data
