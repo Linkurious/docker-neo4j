@@ -5,3 +5,4 @@ services:
   neo4j:
     volumes:
       - /data/neo4j/${PREFIX}/data:/data
+      - /data/neo4j/datasets:/datasets:ro

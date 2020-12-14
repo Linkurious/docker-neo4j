@@ -6,7 +6,9 @@ services:
     volumes:
       - neo4j_data:/data
       - neo4j_datasets:/datasets:ro
-      - /tmp/neoback:/backups
+    command: /bin/bash
+    tty: true
+    stdin_open: true
     ports:
       - "7473:7473"  # https
       - "7474:7474"  # http
