@@ -4,5 +4,5 @@ version: '3.7'
 services:
   neo4j:
     volumes:
-      - /data/neo4j/${FOLDER-PREFIX}/data:/data
+      - /data/neo4j/${FOLDER_PREFIX}/data:/data
       - /data/neo4j/datasets:/datasets:ro
