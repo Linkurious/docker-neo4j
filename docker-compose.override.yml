@@ -6,7 +6,7 @@ services:
     volumes:
       - neo4j_data:/data
       - neo4j_datasets:/datasets:ro
-      - /tmp/neoback:/backups
+      - ./backups:/backups
     ports:
       - "7473:7473"  # https
       - "7474:7474"  # http
