@@ -31,7 +31,7 @@ neo4j-admin restore --from /backups/4.2.0/crunchbase --database crunchbase --ver
 
 On first creation of a db, you will have to:
 ```
-CREATE DATABASE crunchbase
+CREATE DATABASE `crunchbase` WAIT
 ```
 
 ### offline load
