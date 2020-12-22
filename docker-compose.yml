@@ -37,7 +37,7 @@ services:
       - "traefik.http.services.neo4j-metrics-secure.loadbalancer.server.port=2004"
       - "traefik.http.routers.neo4j-metrics-secure.service=neo4j-metrics-secure"
       - "traefik.http.routers.neo4j-metrics-secure.entrypoints=https_priv"
-      - "traefik.http.routers.neo4j-metrics-secure.rule=Host(`${PREFIX}neo4jmetrics.${TRAEFIK_HOST_VPC}`)"
+      - "traefik.http.routers.neo4j-metrics-secure.rule=Host(`${PREFIX}n4m.${TRAEFIK_HOST_VPC}`)"
     networks:
       - traefik_network
 
