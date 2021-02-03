@@ -50,3 +50,11 @@ neo4j-admin load --from=/datasets/crunch.3.5.15  --database=crunchbase-1.0.0
 CREATE DATABASE crunchbase
 
 
+### Aura
+## load db
+From a shell, stoped database :
+```
+bin/neo4j-admin push-to-cloud --bolt-uri neo4j+s://XXXXX.databases.neo4j.io --database=fincrime-1.0.0 --overwrite
+```
+
+
