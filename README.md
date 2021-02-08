@@ -52,6 +52,15 @@ CREATE DATABASE `crunchbase` WAIT
 neo4j-admin load --from=/datasets/crunch.3.5.15  --database=crunchbase-1.0.0
 CREATE DATABASE crunchbase
 
+## Plugins
+### Apoc
+see https://neo4j.com/labs/apoc/4.2/installation/
+
+Download the appropriate version of apoc plugin and drop it in the plugins folder:
+```
+curl -L https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/4.2.0.1/apoc-4.2.0.1-all.jar -o plugins/apoc-4.2.0.1-all.jar
+```
+Warning: Check the matching version for your version of Neo4J
 
 ### Aura
 ## load db
