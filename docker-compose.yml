@@ -32,7 +32,7 @@ services:
       - traefik.http.routers.neo4j${PREFIX}secure.tls.certresolver=gandi-cr
       - traefik.tcp.services.neo4j${PREFIX}bolt.loadbalancer.server.port=7687
       - traefik.tcp.routers.neo4j${PREFIX}bolt.rule=HostSNI(`${PREFIX}neo4jbolt.${TRAEFIK_HOST}`)
-      - traefik.tcp.routers.neo4j${PREFIX}bolt.service=neo4jbolt
+      - traefik.tcp.routers.neo4j${PREFIX}bolt.service=neo4${PREFIX}jbolt
       - traefik.tcp.routers.neo4j${PREFIX}bolt.tls=true
       - traefik.tcp.routers.neo4j${PREFIX}bolt.tls.certresolver=gandi-cr
       - "traefik.http.services.neo4j${PREFIX}metrics-secure.loadbalancer.server.port=2004"
