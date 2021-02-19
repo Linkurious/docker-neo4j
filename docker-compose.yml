@@ -1,0 +1,47 @@
+---
+version: '3.7'
+
+services:
+  neo4j:
+    image: neo4j:${NEO4J_VERSION:-4.2.0-enterprise}
+    # depends_on:
+    #  - plugins-neo4j
+    restart: unless-stopped
+    env_file: ".env.neo4j.${RUN_ENV}"
+    user: "${NEO4J_USER:-7474}:${NEO4J_GROUP:-7474}"
+    environment:
+      #- NEO4J_dbms_security_procedures_unrestricted=\*.\*
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.\*
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_export_file_enabled=true
+      # used to be : NEO4J_dbms_allow__format__migration=true
+      - NEO4J_dbms_allow__upgrade=true
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+      - NEO4J_dbms_connector_https_advertised__address=${PREFIX}neo4j.${TRAEFIK_HOST}:443
+      - NEO4J_dbms_connector_bolt_advertised__address=${PREFIX}neo4jbolt.${TRAEFIK_HOST}:443
+      - NEO4J_metrics_csv_enabled=false
+      - NEO4J_metrics_prometheus_enabled=true
+      - NEO4J_metrics_prometheus_endpoint=0.0.0.0:2004
+    labels:
+      - "traefik.docker.network=traefik_network"
+      - "traefik.enable=true"
+      - "traefik.http.services.neo4j${PREFIX}secure.loadbalancer.server.port=7474"
+      - "traefik.http.routers.neo4j${PREFIX}secure.service=neo4j${PREFIX}secure"
+      - "traefik.http.routers.neo4j${PREFIX}secure.entrypoints=https"
+      - "traefik.http.routers.neo4j${PREFIX}secure.rule=Host(`${PREFIX}neo4j.${TRAEFIK_HOST}`)"
+      - traefik.http.routers.neo4j${PREFIX}secure.tls.certresolver=gandi-cr
+      - traefik.tcp.services.neo4j${PREFIX}bolt.loadbalancer.server.port=7687
+      - traefik.tcp.routers.neo4j${PREFIX}bolt.rule=HostSNI(`${PREFIX}neo4jbolt.${TRAEFIK_HOST}`)
+      - traefik.tcp.routers.neo4j${PREFIX}bolt.service=neo4j${PREFIX}bolt
+      - traefik.tcp.routers.neo4j${PREFIX}bolt.tls=true
+      - traefik.tcp.routers.neo4j${PREFIX}bolt.tls.certresolver=gandi-cr
+      - "traefik.http.services.neo4j${PREFIX}metrics-secure.loadbalancer.server.port=2004"
+      - "traefik.http.routers.neo4j${PREFIX}metrics-secure.service=neo4j${PREFIX}metrics-secure"
+      - "traefik.http.routers.neo4j${PREFIX}metrics-secure.entrypoints=https_priv"
+      - "traefik.http.routers.neo4j${PREFIX}metrics-secure.rule=Host(`${PREFIX}m.${TRAEFIK_HOST_VPC}`)"
+    networks:
+      - traefik_network
+
+networks:
+  traefik_network:
+    external: true

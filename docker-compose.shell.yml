@@ -1,0 +1,20 @@
+---
+version: '3.7'
+
+services:
+  neo4j:
+    volumes:
+      - neo4j_data:/data
+      - neo4j_datasets:/datasets:ro
+    command: /bin/bash
+    tty: true
+    stdin_open: true
+    ports:
+      - "7473:7473"  # https
+      - "7474:7474"  # http
+      - "7687:7687"  # bolt
+
+volumes:
+  neo4j_data:
+  neo4j_datasets:
+
