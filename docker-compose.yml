@@ -27,7 +27,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.neo4j${PREFIX}secure.loadbalancer.server.port=7474"
       - "traefik.http.routers.neo4j${PREFIX}secure.service=neo4j${PREFIX}secure"
-      - "traefik.http.routers.neo4j${PREFIX}secure.entrypoints=https"
+      - "traefik.http.routers.neo4j${PREFIX}secure.entrypoints=https,https_priv"
       - "traefik.http.routers.neo4j${PREFIX}secure.rule=Host(`${PREFIX}neo4j.${TRAEFIK_HOST}`)"
       - traefik.http.routers.neo4j${PREFIX}secure.tls.certresolver=gandi-cr
       - traefik.tcp.services.neo4j${PREFIX}bolt.loadbalancer.server.port=7687
