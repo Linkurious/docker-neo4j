@@ -45,6 +45,7 @@ neo4j-admin restore --from /backups/3.5.15/fincrime-1.0.0/ --database graph.db
 
 On first creation of a db, you will have to:
 ```
+:use system
 CREATE DATABASE `crunchbase` WAIT
 ```
 
