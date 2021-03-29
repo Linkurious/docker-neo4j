@@ -70,4 +70,12 @@ From a shell, stoped database :
 bin/neo4j-admin push-to-cloud --bolt-uri neo4j+s://XXXXX.databases.neo4j.io --database=fincrime-1.0.0 --overwrite
 ```
 
+### Nexus datates
+
+
+## Manual upload for large datasets
+```
+export dataset=fincrime-sales-1.0.0.tgz
+curl -L -v --user admin:${ADMIN_PWD} --upload-file $dataset https://nexus3.linkurious.net/repository/datasets/com/linkurious/neo4j/4.2.4/fincrime-sales/${dataset}
+```
 
