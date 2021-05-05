@@ -21,7 +21,7 @@ docker-compose -f docker-compose.yml  -f docker-compose.override.yml -f docker-c
 ## Backup and restore
 see https://neo4j.com/docs/operations-manual/current/backup/
 
-When working localy, docker-compose.override.yml adds a local bind mount to the /backupes folder.
+When working localy, docker-compose.override.yml adds a local bind mount to the /backups folder.
 
 
 Create an online backup:
