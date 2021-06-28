@@ -18,7 +18,7 @@ From dev env:
 docker-compose -f docker-compose.yml  -f docker-compose.override.yml -f docker-compose.shell.yml run --rm neo4j bash
 ```
 
-## Backup and restore
+## Backup and restore (Neo4j V4)
 see https://neo4j.com/docs/operations-manual/current/backup/
 
 When working localy, docker-compose.override.yml adds a local bind mount to the /backups folder.
@@ -50,8 +50,13 @@ CREATE DATABASE `crunchbase` WAIT
 ```
 
 ### offline load
+```
 neo4j-admin load --from=/datasets/crunch.3.5.15  --database=crunchbase-1.0.0
+```
+and with cypher-shell :
+```
 CREATE DATABASE crunchbase
+```
 
 ## Plugins
 ### Apoc
