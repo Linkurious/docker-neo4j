@@ -9,6 +9,7 @@ Reasonable defaults are provided.
     ```
     $ docker-compose up -d
     ```
+
 ## Neo4j v3 restore
 ```
 docker-compose -f docker-compose.yml -f docker-compose.shell.yml run --rm neo4j bash
