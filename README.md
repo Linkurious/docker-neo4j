@@ -9,6 +9,7 @@ Reasonable defaults are provided.
     ```
     $ docker-compose up -d
     ```
+
 ## Neo4j v3 restore
 ```
 docker-compose -f docker-compose.yml -f docker-compose.shell.yml run --rm neo4j bash
@@ -18,7 +19,7 @@ From dev env:
 docker-compose -f docker-compose.yml  -f docker-compose.override.yml -f docker-compose.shell.yml run --rm neo4j bash
 ```
 
-## Backup and restore
+## Backup and restore (Neo4j V4)
 see https://neo4j.com/docs/operations-manual/current/backup/
 
 When working localy, docker-compose.override.yml adds a local bind mount to the /backups folder.
@@ -50,8 +51,13 @@ CREATE DATABASE `crunchbase` WAIT
 ```
 
 ### offline load
+```
 neo4j-admin load --from=/datasets/crunch.3.5.15  --database=crunchbase-1.0.0
+```
+and with cypher-shell (the credential are specified in the env) :
+```
 CREATE DATABASE crunchbase
+```
 
 ## Plugins
 ### Apoc
@@ -75,12 +81,14 @@ bin/neo4j-admin push-to-cloud --bolt-uri neo4j+s://XXXXX.databases.neo4j.io --da
 
 ## Manual upload for large datasets
 ```
-export dataset=fincrime-sales-1.0.0.tgz
-curl -L -v --user admin:${ADMIN_PWD} --upload-file $dataset https://nexus3.linkurious.net/repository/datasets/com/linkurious/neo4j/4.2.4/fincrime-sales/${dataset}
+export dataset_name=fincrime-sales
+export dataset_version=1.0.0
+curl -L -v --user user@linkurio.us:${USER_PWD} --upload-file ${dataset_name}-${dataset_version}.tgz https://nexus3.linkurious.net/repository/datasets/com/linkurious/neo4j/4.2.4/${dataset_name}/${dataset_name}-${dataset_version}.tgz
 ```
 ## Download dataset
 ```
-export dataset=fincrime-sales-1.0.0.tgz
-curl -L -v --user user:${USER_PWD} https://nexus3.linkurious.net/repository/datasets/com/linkurious/neo4j/4.2.4/fincrime-sales/${dataset}
+export dataset_name=fincrime-sales
+export dataset_version=1.0.0
+curl -L -v --user user@linkurio.us:${USER_PWD} https://nexus3.linkurious.net/repository/datasets/com/linkurious/neo4j/4.2.4/${dataset_name}/${dataset_name}-${dataset_version}.tgz
 ```
 
