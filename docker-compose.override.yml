@@ -12,6 +12,7 @@ services:
       - "7473:7473"  # https
       - "7474:7474"  # http
       - "7687:7687"  # bolt
+      - "2004:2004"  # metrics
 
 volumes:
   neo4j_data:

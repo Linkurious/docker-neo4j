@@ -24,6 +24,9 @@ services:
       - NEO4J_metrics_csv_enabled=false
       - NEO4J_metrics_prometheus_enabled=true
       - NEO4J_metrics_prometheus_endpoint=0.0.0.0:2004
+      - NEO4J_metrics_namespaces_enabled=true
+      - NEO4J_metrics_filter="*bolt.connections*,*bolt.messages_received*,*bolt.messages_started*,*dbms.pool.bolt.free,*dbms.pool.bolt.total_size,*dbms.pool.bolt.total_used,*dbms.pool.bolt.used_heap,*causal_clustering.core.is_leader,*causal_clustering.core.last_leader_message,*causal_clustering.core.replication_attempt,*causal_clustering.core.replication_fail,*check_point.duration,*check_point.total_time,*cypher.replan_events,*ids_in_use.node,*ids_in_use.property,*ids_in_use.relationship,*pool.transaction.*.total_used,*pool.transaction.*.used_heap,*pool.transaction.*.used_native,*store.size*,*transaction.active_read,*transaction.active_write,*transaction.committed*,*transaction.last_committed_tx_id,*transaction.peak_concurrent,*transaction.*,*page_cache.*,*vm.*,"
+
     labels:
       - "traefik.docker.network=traefik_network"
       - "traefik.enable=true"
