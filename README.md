@@ -2,13 +2,23 @@
 
 ## Configuration
   - Configure variables in .env. See .env.example for template.
-Reasonable defaults are provided.
+Reasonable defaults are provided. Simply use them when working localy.
 
 ## Usage
   - Run with docker-compose
     ```
     $ docker-compose up -d
     ```
+
+## Browse database when working localy
+
+Go to http://localhost:7474 and connect with the following parameters:
+
+- Connect URL: bolt://localhost:7687
+- Database: _leave empty_
+- Authentication type: Username / Password
+- Username: neo4j
+- Password: neo3j
 
 ## Neo4j v3 restore
 ```
@@ -24,8 +34,9 @@ see https://neo4j.com/docs/operations-manual/current/backup/
 
 When working localy, docker-compose.override.yml adds a local bind mount to the /backups folder.
 
+Backups can be downloaded from Nexus. They have to be decompressed in the ./backups bind mounted folder.
 
-Create an online backup:
+Create an online backup (command to be executed in the context of the neo4j container, with `docker-compose exec neo4j`):
 ```
 neo4j-admin backup --backup-dir /backups --database crunchbase-1.0.0
 ```
@@ -47,7 +58,13 @@ neo4j-admin restore --from /backups/3.5.15/fincrime-1.0.0/ --database graph.db
 On first creation of a db, you will have to:
 ```
 :use system
-CREATE DATABASE `crunchbase` WAIT
+CREATE DATABASE `crunchbase-1.0.0` WAIT
+```
+
+You can then check that the db has succesfully been restored with:
+```
+:use crunchbase-1.0.0
+match (n) return n limit 10
 ```
 
 ### offline load
@@ -76,7 +93,7 @@ From a shell, stoped database :
 bin/neo4j-admin push-to-cloud --bolt-uri neo4j+s://XXXXX.databases.neo4j.io --database=fincrime-1.0.0 --overwrite
 ```
 
-### Nexus datates
+### Nexus datasets
 
 
 ## Manual upload for large datasets
