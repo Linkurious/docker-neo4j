@@ -34,21 +34,25 @@ see https://neo4j.com/docs/operations-manual/current/backup/
 
 When working localy, docker-compose.override.yml adds a local bind mount to the /backups folder.
 
-The Crunchbase backup can be downloaded from Nexus. Decompress it in the ./backups bind mounted folder.
+Backups can be downloaded from Nexus. They have to be decompressed in the ./backups bind mounted folder.
 
-Create an online backup:
+Create an online backup (command to be executed in the context of the neo4j container, with `docker-compose exec neo4j`):
 ```
-docker-compose exec neo4j neo4j-admin backup --backup-dir /backups --database crunchbase-1.0.0
+neo4j-admin backup --backup-dir /backups --database crunchbase-1.0.0
 ```
 
 Restore/create from dataset:
 ```
-docker-compose exec neo4j neo4j-admin restore --from /datasets/4.2.0/crunchbase --database crunchbase-1.0.0  --verbose
+neo4j-admin restore --from /datasets/4.2.0/crunchbase --database crunchbase-1.0.0  --verbose
 ```
 
 Restore from backup:
 ```
-docker-compose exec neo4j neo4j-admin restore --from /backups/4.2.0/crunchbase --database crunchbase-1.0.0 --verbose
+neo4j-admin restore --from /backups/4.2.0/crunchbase --database crunchbase-1.0.0 --verbose
+```
+in v3.5.x
+```
+neo4j-admin restore --from /backups/3.5.15/fincrime-1.0.0/ --database graph.db
 ```
 
 On first creation of a db, you will have to:
