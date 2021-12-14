@@ -3,7 +3,7 @@ version: '3.7'
 
 services:
   neo4j:
-    image: neo4j:${NEO4J_VERSION:-4.2.0-enterprise}
+    image: neo4j:${NEO4J_VERSION:-4.2.12-enterprise}
     # depends_on:
     #  - plugins-neo4j
     restart: unless-stopped
@@ -24,6 +24,8 @@ services:
       - NEO4J_metrics_csv_enabled=false
       - NEO4J_metrics_prometheus_enabled=true
       - NEO4J_metrics_prometheus_endpoint=0.0.0.0:2004
+      # Log4shell mitigation
+      # - JAVA_TOOL_OPTIONS=-Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
     labels:
       - "traefik.docker.network=traefik_network"
       - "traefik.enable=true"
