@@ -3,7 +3,7 @@ version: '3.7'
 
 services:
   neo4j:
-    image: neo4j:${NEO4J_VERSION:-4.2.11-enterprise}
+    image: neo4j:${NEO4J_VERSION:-4.2.12-enterprise}
     # depends_on:
     #  - plugins-neo4j
     restart: unless-stopped
@@ -25,9 +25,7 @@ services:
       - NEO4J_metrics_prometheus_enabled=true
       - NEO4J_metrics_prometheus_endpoint=0.0.0.0:2004
       # Log4shell mitigation
-      # - NEO4J_dbms_jvm_additional=-XX:+UseG1GC -XX:-OmitStackTraceInFastThrow -XX:+AlwaysPreTouch -XX:+UnlockExperimentalVMOptions -XX:+TrustFinalNonStaticFields -XX:+DisableExplicitGC -XX:MaxInlineLevel=15 -XX:-UseBiasedLocking -Djdk.nio.maxCachedBufferSize=262144 -Dio.netty.tryReflectionSetAccessible=true -Djdk.tls.ephemeralDHKeySize=2048 -Djdk.tls.rejectClientInitiatedRenegotiation=true -XX:FlightRecorderOptions=stackdepth=256 -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
-      # - LOG4J_FORMAT_MSG_NO_LOOKUPS=true
-      - JAVA_TOOL_OPTIONS=-Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
+      # - JAVA_TOOL_OPTIONS=-Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
     labels:
       - "traefik.docker.network=traefik_network"
       - "traefik.enable=true"
