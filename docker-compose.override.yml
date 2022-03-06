@@ -8,6 +8,7 @@ services:
       - neo4j_datasets:/datasets:ro
       - ./backups:/backups
       - ./plugins:/plugins
+      - ./scripts:/scripts
     ports:
       - "7473:7473"  # https
       - "7474:7474"  # http
