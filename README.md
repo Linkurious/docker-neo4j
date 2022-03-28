@@ -3,7 +3,11 @@
 ## Configuration
   - Configure variables in .env. See .env.example for template.
 Reasonable defaults are provided. Simply use them when working localy.
-
+    ```
+    $ ln -s .env.example .env
+    ```
+    Do the same for others .env* files.
+    
 ## Usage
   - Run with docker-compose
     ```
@@ -58,7 +62,7 @@ neo4j-admin restore --from /backups/3.5.15/fincrime-1.0.0/ --database graph.db
 On first creation of a db, you will have to:
 ```
 :use system
-CREATE DATABASE `crunchbase-1.0.0` WAIT
+CREATE DATABASE `crunchbase-1.0.0` WAIT;
 ```
 
 You can then check that the db has succesfully been restored with:
@@ -73,7 +77,7 @@ neo4j-admin load --from=/datasets/crunch.3.5.15  --database=crunchbase-1.0.0
 ```
 and with cypher-shell (the credential are specified in the env) :
 ```
-CREATE DATABASE crunchbase
+CREATE DATABASE crunchbase;
 ```
 
 ## Plugins
