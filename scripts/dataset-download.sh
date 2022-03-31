@@ -16,8 +16,8 @@ function usage
 
 function download_dataset
 {
+  full_dataset_name=$1
   restore_path=$2
-  full_dataset_name="${dataset_name}-${dataset_version}"
 
   echo "Downloading ${full_dataset_name} from ${nexus_url} for neo4j ${neo4j_version}"
 
@@ -207,8 +207,6 @@ debug=""
 nexus_url="https://nexus3.linkurious.net"
 nexus_token="$NEXUS_TOKEN"
 dataset_neo4j_version="$DATASET_NEO4J_VERSION"
-dataset_name="$DATASET_NAME"
-dataset_version="$DATASET_VERSION"
 
 while getopts "n:u:dh" argument
 do
@@ -225,4 +223,11 @@ if [[ -z $dataset_neo4j_version ]]; then
   echo "Missing dataset_neo4j_version"
   usage
 fi
-restore_database $dataset_name-$dataset_version
+
+# Split by comma
+IFS=","
+read -a datasets <<< "$DATASETS"
+for db in "${datasets[@]}"; do
+  restore_database "$db"
+  print_volumes_state
+done
