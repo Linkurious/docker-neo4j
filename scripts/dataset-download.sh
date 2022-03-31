@@ -18,6 +18,7 @@ function download_dataset
 {
   full_dataset_name=$1
   restore_path=$2
+  dataset_same=${full_dataset_name%-*}
 
   echo "Downloading ${full_dataset_name} from ${nexus_url} for neo4j ${neo4j_version}"
 
