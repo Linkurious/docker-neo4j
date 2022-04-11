@@ -20,7 +20,7 @@ function download_dataset
   restore_path=$2
   dataset_name=${full_dataset_name%-*}
 
-  echo "Downloading ${full_dataset_name} from ${nexus_url} for neo4j ${neo4j_version}"
+  echo "Downloading ${full_dataset_name} from ${nexus_url} for neo4j ${dataset_neo4j_version}"
 
   wget $debug --header "Authorization: Basic ${nexus_token}" "${nexus_url}/repository/datasets/com/linkurious/neo4j/${dataset_neo4j_version}/${dataset_name}/${full_dataset_name}.tgz" -O "${restore_path}/${full_dataset_name}.tar.gz"
 }
@@ -71,7 +71,7 @@ function restore_database {
     echo "Making restore directory"
     mkdir -p "$RESTORE_ROOT"
 
-  download_dataset $db $RESTORE_ROOT
+  download_dataset "$db" "$RESTORE_ROOT"
 
     if [ $? -ne 0 ] ; then
         echo "Cannot restore $db"
@@ -102,7 +102,7 @@ function restore_database {
         # foo-$TIMESTAMP.tar.gz untars/zips to a directory called foo.
         UNTARRED_BACKUP_DIR=$db
 
-        if [ -z $BACKUP_SET_DIR ] ; then
+        if [ -z "$BACKUP_SET_DIR" ] ; then
             echo "BACKUP_SET_DIR was not specified, so I am assuming this backup set was formatted by my backup utility"
             RESTORE_FROM="$RESTORE_ROOT/$UNTARRED_BACKUP_DIR"
         else
@@ -121,7 +121,7 @@ function restore_database {
         # Remove file extension, get to directory name
         UNZIPPED_BACKUP_DIR=${BACKUP_FILENAME%.zip}
 
-        if [ -z $BACKUP_SET_DIR ] ; then
+        if [ -z "$BACKUP_SET_DIR" ] ; then
             echo "BACKUP_SET_DIR was not specified, so I am assuming this backup set was formatted by my backup utility"
             if [ -d "$RESTORE_ROOT/backups" ] ; then
                 RESTORE_FROM="$RESTORE_ROOT/backups/$db"
