@@ -10,6 +10,22 @@ neo4j-standalone:
     # Uncomment to use enterprise edition
     edition: "enterprise"
     acceptLicenseAgreement: "yes"
+  config:
+    dbms.connector.bolt.advertised_address: b-neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:443
+    dbms.connector.https.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:443
+    dbms.security.authentication_providers: oidc-azure
+    dbms.security.authorization_providers: oidc-azure
+    dbms.security.oidc.azure.display_name: Azure
+    dbms.security.oidc.azure.auth_flow: pkce
+    dbms.security.oidc.azure.well_known_discovery_uri: https://login.microsoftonline.com/9c0acfe4-4dba-44f4-b8ae-c39d9aa8d991/v2.0/.well-known/openid-configuration
+    dbms.security.oidc.azure.audience: 53d9ec2c-b8dd-4e1e-96a2-b9c484205353
+    dbms.security.oidc.azure.claims.username: email
+    dbms.security.oidc.azure.claims.groups: groups
+    dbms.security.oidc.azure.params: "client_id=53d9ec2c-b8dd-4e1e-96a2-b9c484205353;response_type=code;scope=openid profile email"
+    dbms.security.oidc.azure.config: "token_type_principal=id_token;token_type_authentication=id_token"
+    dbms.security.oidc.azure.authorization.group_to_role_mapping: |
+      "86b0df6b-ec62-41f6-9250-d22e951755fa" = admin; \
+      "1e27ad10-142d-4921-8408-055b422f32f5" = reader
 
   podSpec:
     initContainers:
