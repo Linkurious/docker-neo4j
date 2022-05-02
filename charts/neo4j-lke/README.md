@@ -9,3 +9,7 @@ see https://github.com/neo4j-contrib/neo4j-helm/blob/master/templates/core-state
 Connecting
 kubectl run --rm -it --namespace "neo4j-dev" --image "neo4j:4.4.3" cypher-shell \
      -- cypher-shell -a "neo4j://neo4j-enys.neo4j-dev.svc.cluster.local:7687" -u neo4j -p "PASSWORD"
+
+https://neo4j.com/docs/operations-manual/current/kubernetes/accessing-cluster/
+kubectl port-forward svc/<release-name> tcp-bolt tcp-http tcp-https
+
