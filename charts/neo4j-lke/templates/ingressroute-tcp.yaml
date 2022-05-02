@@ -23,14 +23,14 @@ spec:
   ingressClassName: {{ .Values.ingressRoute.className }}
   {{- end }}
   entryPoints:
-    - websecure
+    - tcpsecure
   {{- if .Values.ingressRoute.tls }}
   tls:
     secretName: {{ .Values.ingressRoute.tls.secretName }}
   {{- end }}
   routes:
     {{- range .Values.ingressRoute.hosts }}
-    - match: HostSNI(`b-{{ .host | default $defaultHostUrl }}`)
+    - match: HostSNI(`{{ .host | default $defaultHostUrl }}`)
       kind: Rule
       services:
         - name: {{ $fullName }}-neo4j
