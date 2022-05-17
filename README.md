@@ -71,12 +71,13 @@ You can then check that the db has succesfully been restored with:
 match (n) return n limit 10
 ```
 
-### offline load
+### Offline load
 ```
 neo4j-admin load --from=/datasets/crunch.3.5.15  --database=crunchbase-1.0.0
 ```
-and with cypher-shell (the credential are specified in the env) :
+and create the database via cypher-shell (the credential are specified in the .env.neo4j.dev at the root of you repository) :
 ```
+cypher-shell
 CREATE DATABASE crunchbase;
 ```
 
