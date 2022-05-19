@@ -5,7 +5,7 @@ neo4j-standalone:
       memory: "2Gi"
 
     # Uncomment to set the initial password
-    #password: "my-initial-password"
+    # password: "my-initial-password"
 
     # Uncomment to use enterprise edition
     edition: "enterprise"
@@ -46,7 +46,7 @@ neo4j-standalone:
       - name: neo4j-restore
         image: neo4j:4.4.3-enterprise
           # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
-        command: [ '/data/docker-neo4j/scripts/dataset-download.sh']
+        command: ['/data/docker-neo4j/scripts/dataset-download.sh']
         env:
           - name: DATASETS
             value: aml-1.0.0
@@ -69,7 +69,7 @@ neo4j-standalone:
       spec:
         type: ClusterIP
 
-#####Top level lke chart
+##### Top level lke chart
 nameOverride: "neo4j"
 fullnameOverride: ""
 hostPostfix: k8s.dev.linkurious.net

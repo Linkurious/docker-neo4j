@@ -21,8 +21,10 @@ version: 0.1.0
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "1.16.0"
+appVersion: "4.4.6"
 dependencies:
   - name: neo4j-standalone
     version: 4.4.6
     repository: https://helm.neo4j.com/neo4j
+maintainers:
+  - name: enys
