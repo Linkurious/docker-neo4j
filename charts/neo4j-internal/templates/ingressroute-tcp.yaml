@@ -33,7 +33,7 @@ spec:
     - match: HostSNI(`{{ .host | default $defaultHostUrl }}`)
       kind: Rule
       services:
-        - name: {{ $fullName }}-neo4j
+        - name: {{ $fullName }}
           port: {{ $svcPort }}
             # middlewares:
             #   - name: traefik-traefik-forward-auth@kubernetescrd
