@@ -11,8 +11,8 @@ neo4j-standalone:
     edition: "enterprise"
     acceptLicenseAgreement: "yes"
   config:
-    dbms.connector.bolt.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:7687
-    dbms.connector.https.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:443
+    #dbms.connector.bolt.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:7687
+    #dbms.connector.https.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:443
     dbms.security.authentication_providers: oidc-azure
     dbms.security.authorization_providers: oidc-azure
     dbms.security.oidc.azure.display_name: Azure
