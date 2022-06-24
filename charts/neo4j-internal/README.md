@@ -26,6 +26,7 @@ https://neo4j.com/docs/operations-manual/current/kubernetes/accessing-cluster/
 kubectl port-forward svc/<release-name> tcp-bolt tcp-http tcp-https
 
 ## SSO
+https://neo4j.com/docs/operations-manual/current/tutorial/tutorial-sso-configuration/
 SSo is setup, see values files.
 However, wildcard urls do not work.
 You will have to get your admin to authorize your url in AZure
