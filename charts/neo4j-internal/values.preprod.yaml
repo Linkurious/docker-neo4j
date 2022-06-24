@@ -11,8 +11,8 @@ neo4j-standalone:
     edition: "enterprise"
     acceptLicenseAgreement: "yes"
   config:
-    # dbms.connector.bolt.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:7687
-    # dbms.connector.https.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:443
+    #dbms.connector.bolt.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:7687
+    #dbms.connector.https.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:443
     dbms.security.authentication_providers: oidc-azure
     dbms.security.authorization_providers: oidc-azure
     dbms.security.oidc.azure.display_name: Azure
@@ -54,7 +54,7 @@ neo4j-standalone:
             value: 4.2.0
         envFrom:
           - secretRef:
-              name: neo4j-dev-nexus-dataset # imports NEXUS_TOKEN
+              name: neo4j-preprod-nexus-dataset # imports NEXUS_TOKEN
         volumeMounts:
           - name: data
             mountPath: /data/

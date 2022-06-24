@@ -14,8 +14,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "neo4j-lke.labels" . | nindent 4 }}
-  {{- with .Values.ingressRoute.annotations }}
   annotations:
+    link.argocd.argoproj.io/external-link: https://{{ $defaultHostUrl }}
+  {{- with .Values.ingressRoute.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
