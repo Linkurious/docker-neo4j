@@ -45,7 +45,7 @@ neo4j-standalone:
             mountPath: /tmp/git/
       - name: neo4j-restore
           # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
-        command: ['/data/docker-neo4j/scripts/dataset-download.sh']
+        command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
         env:
           - name: DATASETS
             value: aml-1.0.0

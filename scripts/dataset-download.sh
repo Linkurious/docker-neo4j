@@ -215,7 +215,7 @@ do
   case $argument in
     u) nexus_url=$OPTARG;;
     n) dataset_neo4j_version=$OPTARG;;
-    p) dataset_folder_prefix=$OPTARG;;
+    p) data_folder_prefix=$OPTARG;;
     d) debug='-vv';;
     h) usage;;
     *) usage;;
