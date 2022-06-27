@@ -13,8 +13,8 @@ neo4j-standalone:
   config:
     #dbms.connector.bolt.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:7687
     #dbms.connector.https.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:443
-    dbms.security.authentication_providers: oidc-azure
-    dbms.security.authorization_providers: oidc-azure
+    dbms.security.authentication_providers: oidc-azure,native
+    dbms.security.authorization_providers: oidc-azure,native
     dbms.security.oidc.azure.display_name: Azure
     dbms.security.oidc.azure.auth_flow: pkce
     dbms.security.oidc.azure.well_known_discovery_uri: https://login.microsoftonline.com/9c0acfe4-4dba-44f4-b8ae-c39d9aa8d991/v2.0/.well-known/openid-configuration
@@ -37,14 +37,13 @@ neo4j-standalone:
         - name: GIT_SYNC_DEST
           value: docker-neo4j
         - name: GIT_SYNC_BRANCH
-          value: develop
+          value: feature/init-db
         - name: GIT_SYNC_ONE_TIME
           value: 'true'
         volumeMounts:
           - name: data
             mountPath: /tmp/git/
       - name: neo4j-restore
-        image: neo4j:4.4.3-enterprise
           # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
         command: ['/data/docker-neo4j/scripts/dataset-download.sh']
         env:

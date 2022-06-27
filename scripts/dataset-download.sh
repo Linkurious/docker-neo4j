@@ -39,8 +39,8 @@ function restore_database {
     echo ""
     echo "=== RESTORE $db"
 
-    if [ -d "/data/databases/$db" ] ; then
-        echo "You have an existing graph database at /data/databases/$db"
+    if [ -d "${data_folder_prefix}/data/databases/$db" ] ; then
+        echo "You have an existing graph database at ${data_folder_prefix}/data/databases/$db"
 
         if [ "$FORCE_OVERWRITE" != "true" ] ; then
             echo "And you have not specified FORCE_OVERWRITE=true, so we will not restore because"
@@ -48,7 +48,7 @@ function restore_database {
             return
         fi
     else
-        echo "No existing graph database found at /data/databases/$db"
+        echo "No existing graph database found at ${data_folder_prefix}/data/databases/$db"
     fi
 
     # Pass the force flag to the restore operation, which will overwrite
@@ -66,7 +66,7 @@ function restore_database {
         FORCE_FLAG=""
     fi
 
-    RESTORE_ROOT=/data/.restore
+    RESTORE_ROOT=${data_folder_prefix}/data/.restore
 
     echo "Making restore directory"
     mkdir -p "$RESTORE_ROOT"
@@ -126,7 +126,7 @@ function restore_database {
             if [ -d "$RESTORE_ROOT/backups" ] ; then
                 RESTORE_FROM="$RESTORE_ROOT/backups/$db"
             else
-                RESTORE_FROM="$RESTORE_ROOT/data/$db"
+                RESTORE_FROM="$RESTORE_ROOT${data_folder_prefix}/data/$db"
             fi
         else
             RESTORE_FROM="$RESTORE_ROOT/$BACKUP_SET_DIR"
@@ -146,16 +146,16 @@ function restore_database {
     du -hs "$RESTORE_FROM"
 
     # Destination docker directories.
-    mkdir -p /data/databases
-    mkdir -p /data/transactions
+    mkdir -p ${data_folder_prefix}/data/databases
+    mkdir -p ${data_folder_prefix}/data/transactions
 
     cd /data && \
     echo "Dry-run command"
     echo neo4j-admin restore \
          --from="$RESTORE_FROM" \
          --database="$db" $FORCE_FLAG \
-         --to-data-directory /data/databases/ \
-         --to-data-tx-directory /data/transactions/ \
+         --to-data-directory ${data_folder_prefix}/data/databases/ \
+         --to-data-tx-directory ${data_folder_prefix}/data/transactions/ \
          --move \
          --verbose
 
@@ -165,8 +165,8 @@ function restore_database {
     neo4j-admin restore \
         --from="$RESTORE_FROM" \
         --database="$db" $FORCE_FLAG \
-        --to-data-directory /data/databases/ \
-        --to-data-tx-directory /data/transactions/ \
+        --to-data-directory ${data_folder_prefix}/data/databases/ \
+        --to-data-tx-directory ${data_folder_prefix}/data/transactions/ \
         --move \
         --verbose
 
@@ -180,18 +180,18 @@ function restore_database {
     fi
 
     # Modify permissions/group, because we're running as root.
-    chown -R neo4j /data/databases
-    chown -R neo4j /data/transactions
-    chgrp -R neo4j /data/databases
-    chgrp -R neo4j /data/transactions
+    chown -R neo4j ${data_folder_prefix}/data/databases
+    chown -R neo4j ${data_folder_prefix}/data/transactions
+    chgrp -R neo4j ${data_folder_prefix}/data/databases
+    chgrp -R neo4j ${data_folder_prefix}/data/transactions
 
     echo "Final permissions"
-    ls -al "/data/databases/$db"
-    ls -al "/data/transactions/$db"
+    ls -al "${data_folder_prefix}/data/databases/$db"
+    ls -al "${data_folder_prefix}/data/transactions/$db"
 
     echo "Final size"
-    du -hs "/data/databases/$db"
-    du -hs "/data/transactions/$db"
+    du -hs "${data_folder_prefix}/data/databases/$db"
+    du -hs "${data_folder_prefix}/data/transactions/$db"
 
     if [ "$PURGE_ON_COMPLETE" = true ] ; then
         echo "Purging backupset from disk"
@@ -208,12 +208,14 @@ debug=""
 nexus_url="https://nexus3.linkurious.net"
 nexus_token="$NEXUS_TOKEN"
 dataset_neo4j_version="$DATASET_NEO4J_VERSION"
+data_folder_prefix=""
 
-while getopts "n:u:dh" argument
+while getopts "n:p:u:dh" argument
 do
   case $argument in
     u) nexus_url=$OPTARG;;
     n) dataset_neo4j_version=$OPTARG;;
+    p) dataset_folder_prefix=$OPTARG;;
     d) debug='-vv';;
     h) usage;;
     *) usage;;
