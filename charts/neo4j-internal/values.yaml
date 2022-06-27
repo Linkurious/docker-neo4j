@@ -13,6 +13,7 @@ neo4j-standalone:
   config:
     # dbms.connector.bolt.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:7687
     # dbms.connector.https.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:443
+    dbms.allow_upgrade: 'true'
     dbms.security.authentication_providers: oidc-azure
     dbms.security.authorization_providers: oidc-azure
     dbms.security.oidc.azure.display_name: Azure
