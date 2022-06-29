@@ -30,7 +30,13 @@ spec:
           - -c
           - |
             sleep 10
-            cypher-shell -a {{ .Release.Name }} -d 'system' -u 'neo4j'  -p ${NEO4J_AUTH#*/} 'CREATE DATABASE `aml-1.0.0` IF NOT EXISTS'
+            IFS=',' read -ra DATASET <<< $DATASETS
+            for dataset in "${DATASET[@]}"; do
+              echo "Creating database ${dataset}"
+              cypher-shell -a {{ .Release.Name }} -d 'system' -u 'neo4j'  -p ${NEO4J_AUTH#*/} "CREATE DATABASE \`${dataset}\` IF NOT EXISTS"
+            done
         envFrom:
           - secretRef:
               name: "{{ .Release.Name }}-auth"
+          - configMapRef:
+              name: "{{ .Release.Name }}-user-config"

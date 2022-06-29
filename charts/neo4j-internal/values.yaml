@@ -13,9 +13,10 @@ neo4j-standalone:
   config:
     # dbms.connector.bolt.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:7687
     # dbms.connector.https.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:443
+    dbms.config.strict_validation: "false"
     dbms.allow_upgrade: 'true'
-    dbms.security.authentication_providers: oidc-azure
-    dbms.security.authorization_providers: oidc-azure
+    dbms.security.authentication_providers: oidc-azure,native
+    dbms.security.authorization_providers: oidc-azure,native
     dbms.security.oidc.azure.display_name: Azure
     dbms.security.oidc.azure.auth_flow: pkce
     dbms.security.oidc.azure.well_known_discovery_uri: https://login.microsoftonline.com/9c0acfe4-4dba-44f4-b8ae-c39d9aa8d991/v2.0/.well-known/openid-configuration
@@ -27,6 +28,8 @@ neo4j-standalone:
     dbms.security.oidc.azure.authorization.group_to_role_mapping: |
       "86b0df6b-ec62-41f6-9250-d22e951755fa" = admin; \
       "1e27ad10-142d-4921-8408-055b422f32f5" = reader
+    DATASETS: crunchbase-1.0.0
+    DATASET_NEO4J_VERSION: 4.2.0
 
   podSpec:
     initContainers:
@@ -48,11 +51,6 @@ neo4j-standalone:
         image: neo4j:4.4.3-enterprise
           # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
         command: ['/data/docker-neo4j/scripts/dataset-download.sh']
-        env:
-          - name: DATASETS
-            value: aml-1.0.0
-          - name: DATASET_NEO4J_VERSION
-            value: 4.2.0
         envFrom:
           - secretRef:
               name: neo4j-dev-nexus-dataset # imports NEXUS_TOKEN

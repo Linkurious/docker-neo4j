@@ -26,6 +26,8 @@ neo4j-standalone:
     dbms.security.oidc.azure.authorization.group_to_role_mapping: |
       "86b0df6b-ec62-41f6-9250-d22e951755fa" = admin; \
       "1e27ad10-142d-4921-8408-055b422f32f5" = reader
+    DATASETS: aml-1.0.0,crunchbase-1.0.0
+    DATASET_NEO4J_VERSION: 4.2.0
 
   podSpec:
     initContainers:
@@ -46,17 +48,14 @@ neo4j-standalone:
       - name: neo4j-restore
           # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
         command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
-        env:
-          - name: DATASETS
-            value: aml-1.0.0
-          - name: DATASET_NEO4J_VERSION
-            value: 4.2.0
         envFrom:
           - secretRef:
               name: neo4j-preprod-nexus-dataset # imports NEXUS_TOKEN
         volumeMounts:
           - name: data
             mountPath: /data/
+          - name: neo4j-conf
+            mountPath: "/config/neo4j.conf"
 
   volumes:
     data:
@@ -87,3 +86,4 @@ ingressRoute:
     secretName: wildcard-default-cert
     hosts: []
       # - chart-example.local
+
