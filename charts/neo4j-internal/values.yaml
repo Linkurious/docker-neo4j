@@ -50,13 +50,15 @@ neo4j-standalone:
       - name: neo4j-restore
         image: neo4j:4.4.3-enterprise
           # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
-        command: ['/data/docker-neo4j/scripts/dataset-download.sh']
+        command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
         envFrom:
           - secretRef:
               name: neo4j-dev-nexus-dataset # imports NEXUS_TOKEN
         volumeMounts:
           - name: data
             mountPath: /data/
+          - name: neo4j-conf
+            mountPath: "/config/neo4j.conf"
 
   volumes:
     data:
