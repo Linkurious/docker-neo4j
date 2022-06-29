@@ -204,17 +204,18 @@ function restore_database {
 ##########
 # Main
 ##########
+if [[ -z $DATASETS ]]; then
+  echo "getting from neo config"
+  DATASETS=$(cat /config/neo4j.conf/DATASETS)
+  DATASET_NEO4J_VERSION=$(cat /config/neo4j.conf/DATASET_NEO4J_VERSION)
+fi
+
 debug=""
 nexus_url="https://nexus3.linkurious.net"
 nexus_token="$NEXUS_TOKEN"
 dataset_neo4j_version="$DATASET_NEO4J_VERSION"
 data_folder_prefix=""
 
-if [[ -z $DATASETS ]]; then
-  echo "getting from neo config"
-  DATASETS=$(cat /config/neo4j.conf/DATASETS)
-  DATASET_NEO4J_VERSION=$(cat /config/neo4j.conf/DATASET_NEO4J_VERSION)
-fi
 
 while getopts "n:p:u:dh" argument
 do
