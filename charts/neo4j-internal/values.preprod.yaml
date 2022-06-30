@@ -26,7 +26,7 @@ neo4j-standalone:
         - name: GIT_SYNC_DEST
           value: docker-neo4j
         - name: GIT_SYNC_BRANCH
-          value: feature/init-db
+          value: develop
         - name: GIT_SYNC_ONE_TIME
           value: 'true'
         volumeMounts:

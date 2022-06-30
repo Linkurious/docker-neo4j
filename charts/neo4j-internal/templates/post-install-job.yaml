@@ -29,6 +29,7 @@ spec:
           - /bin/bash
           - -c
           - |
+            set -e
             sleep 10
             IFS=',' read -ra DATASET <<< $DATASETS
             for dataset in "${DATASET[@]}"; do
