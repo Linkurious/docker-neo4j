@@ -28,6 +28,8 @@ neo4j-standalone:
     dbms.security.oidc.azure.authorization.group_to_role_mapping: |
       "86b0df6b-ec62-41f6-9250-d22e951755fa" = admin; \
       "1e27ad10-142d-4921-8408-055b422f32f5" = reader
+    metrics.prometheus.enabled: 'true'
+    metrics.prometheus.endpoint: '0.0.0.0:2004'
     # used to workaround lack of config in helm chart
     DATASETS: crunchbase-1.0.0
     DATASET_NEO4J_VERSION: 4.2.0
