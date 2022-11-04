@@ -13,7 +13,7 @@ neo4j-standalone:
   config:
     #dbms.connector.bolt.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:7687
     #dbms.connector.https.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:443
-    DATASETS: aml-1.0.0,crunchbase-1.0.0
+    DATASETS: aml-1.0.0,crunchbase-1.0.0,fincrime-1.0.0
     DATASET_NEO4J_VERSION: 4.2.0
 
   podSpec:
