@@ -24,7 +24,7 @@ version: 0.1.1
 appVersion: "4.4.11"
 dependencies:
   - name: neo4j-standalone
-    version: 4.4.11
+    version: 4.4.14
     repository: https://helm.neo4j.com/neo4j
 maintainers:
   - name: enys
