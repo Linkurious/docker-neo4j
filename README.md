@@ -91,7 +91,7 @@ CREATE DATABASE crunchbase;
 
 ## Plugins
 ### Apoc
-see https://neo4j.com/labs/apoc/4.2/installation/
+see https://neo4j.com/labs/apoc/4.4/installation/
 
 Download the appropriate version of apoc plugin and drop it in the plugins folder:
 ```sh
