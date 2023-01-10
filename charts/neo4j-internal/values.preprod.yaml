@@ -1,8 +1,12 @@
 neo4j-standalone:
   neo4j:
     resources:
-      cpu: "2"
-      memory: "2Gi"
+      requests:
+        cpu: 1000m
+        memory: "2Gi"
+      limits:
+        cpu: 2000m
+        memory: "2Gi"
 
     # Uncomment to set the initial password
     # password: "my-initial-password"
