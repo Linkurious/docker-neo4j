@@ -171,7 +171,7 @@ function restore_database {
     print_volumes_state
 
     echo "Now restoring"
-    neo4j-admin "$neo4j_restore_params"
+    neo4j-admin $neo4j_restore_params
 
     RESTORE_EXIT_CODE=$?
 
