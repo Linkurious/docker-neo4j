@@ -151,7 +151,7 @@ function restore_database {
 
     cd /data && \
 
-    neo4j_restore_params="restore \
+    neo4j_restore="neo4j-admin restore \
          --from='$RESTORE_FROM' \
          --database='$db' $FORCE_FLAG \
          --to-data-directory ${data_folder_prefix}/data/databases/ \
@@ -166,12 +166,12 @@ function restore_database {
             --verbose '$db'"
     fi
     echo "Dry-run command"
-    echo neo4j-admin "$neo4j_restore_params"
+    echo "$neo4j_restore_params"
 
     print_volumes_state
 
     echo "Now restoring"
-    neo4j-admin $neo4j_restore_params
+    eval $neo4j_restore_params
 
     RESTORE_EXIT_CODE=$?
 
