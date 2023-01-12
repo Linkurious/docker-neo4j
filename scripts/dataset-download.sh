@@ -160,7 +160,7 @@ function restore_database {
          --verbose"
     if [[  "$neo4j_major" == "5" ]]; then
         neo4j_restore_params="database restore \
-            --from='$RESTORE_FROM' \
+            --from-path='$RESTORE_FROM' \
             --to-path-data ${data_folder_prefix}/data/databases/ \
             --to-path-txn ${data_folder_prefix}/data/transactions/ \
             --verbose '$db'"
