@@ -16,11 +16,17 @@ Reasonable defaults are provided. Simply use them when working localy.
 ln -s .env.example .env
 ln -s .env.neo4j.example .env.neo4j.dev
 ```
-    
-### Start
+
+### Start neo4j v4
 Run with docker-compose
 ```sh
 docker-compose up -d
+```
+
+### Start neo4j v5
+Run with docker-compose
+```sh
+docker-compose -f docker-compose.v5.yml up -d
 ```
 
 ## Browse database when working localy
