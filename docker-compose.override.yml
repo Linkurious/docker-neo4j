@@ -3,6 +3,8 @@ version: '3.7'
 
 services:
   neo4j:
+    environment:
+    - NEO4J_PLUGINS=["apoc"]
     volumes:
       - neo4j_data:/data
       - neo4j_datasets:/datasets:ro

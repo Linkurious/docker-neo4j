@@ -20,12 +20,11 @@ services:
       # used to be : NEO4J_dbms_allow__format__migration=true
       # - NEO4J_dbms_allow__upgrade=true
       - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
-      - NEO4J_PLUGINS=["apoc"]
       - NEO4J_server_http_advertised__address=${PREFIX}neo4j.${TRAEFIK_HOST}:443
       - NEO4J_server_bolt_advertised__address=${PREFIX}neo4jbolt.${TRAEFIK_HOST}:443
-      # - NEO4J_metrics_csv_enabled=false
-      # - NEO4J_metrics_prometheus_enabled=true
-      # - NEO4J_metrics_prometheus_endpoint=0.0.0.0:2004
+      - NEO4J_server_metrics_csv_enabled=false
+      - NEO4J_server_metrics_prometheus_enabled=true
+      - NEO4J_server_metrics_prometheus_endpoint=0.0.0.0:2004
       # Log4shell mitigation
       # - JAVA_TOOL_OPTIONS=-Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
     labels:
