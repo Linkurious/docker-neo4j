@@ -3,13 +3,20 @@ version: '3.9'
 
 services:
   neo4j:
-    image: neo4j:${NEO4J_VERSION:-4.4.3-enterprise}
+    image: neo4j:${NEO4J_VERSION:-5.3.0-enterprise}
     # depends_on:
     #  - plugins-neo4j
     restart: unless-stopped
     env_file: ".env.neo4j.${RUN_ENV}"
     user: "${NEO4J_USER:-7474}:${NEO4J_GROUP:-7474}"
     environment:
+      # new NEO4J vars for version 5 support
+      - NEO4J_server_bolt_listen__address=:7687
+      - NEO4J_server_bolt_advertised__address=127.0.0.1:7687
+      - NEO4J_server_http_listen__address=:7474
+      - NEO4J_server_http_advertised__address=127.0.0.1:7474
+      - NEO4J_server_https_listen__address=:7473
+      - NEO4J_server_https_advertised__address=127.0.0.1:7473
       #- NEO4J_dbms_security_procedures_unrestricted=\*.\*
       - NEO4J_dbms_security_procedures_unrestricted=apoc.\*
       - NEO4J_apoc_export_file_enabled=true
@@ -17,13 +24,14 @@ services:
       - NEO4J_apoc_import_file_use__neo4j__config=true
       - NEO4J_apoc_trigger_enabled=true
       # used to be : NEO4J_dbms_allow__format__migration=true
-      - NEO4J_dbms_allow__upgrade=true
+      # - NEO4J_dbms_allow__upgrade=true
       - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
-      - NEO4J_dbms_connector_https_advertised__address=${PREFIX}neo4j.${TRAEFIK_HOST}:443
-      - NEO4J_dbms_connector_bolt_advertised__address=${PREFIX}neo4jbolt.${TRAEFIK_HOST}:443
-      - NEO4J_metrics_csv_enabled=false
-      - NEO4J_metrics_prometheus_enabled=true
-      - NEO4J_metrics_prometheus_endpoint=0.0.0.0:2004
+      - NEO4J_PLUGINS=["apoc"]
+      # - NEO4J_dbms_connector_https_advertised__address=${PREFIX}neo4j.${TRAEFIK_HOST}:443
+      # - NEO4J_dbms_connector_bolt_advertised__address=${PREFIX}neo4jbolt.${TRAEFIK_HOST}:443
+      # - NEO4J_metrics_csv_enabled=false
+      # - NEO4J_metrics_prometheus_enabled=true
+      # - NEO4J_metrics_prometheus_endpoint=0.0.0.0:2004
       # Log4shell mitigation
       # - JAVA_TOOL_OPTIONS=-Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
     labels:
