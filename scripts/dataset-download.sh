@@ -150,25 +150,28 @@ function restore_database {
     mkdir -p ${data_folder_prefix}/data/transactions
 
     cd /data && \
-    echo "Dry-run command"
-    echo neo4j-admin restore \
-         --from="$RESTORE_FROM" \
-         --database="$db" $FORCE_FLAG \
+
+    neo4j_restore_params="restore \
+         --from='$RESTORE_FROM' \
+         --database='$db' $FORCE_FLAG \
          --to-data-directory ${data_folder_prefix}/data/databases/ \
          --to-data-tx-directory ${data_folder_prefix}/data/transactions/ \
          --move \
-         --verbose
+         --verbose"
+    if [[  "$neo4j_major" == "5" ]]; then
+        neo4j_restore_params="database restore \
+            --from='$RESTORE_FROM' \
+            --to-path-data ${data_folder_prefix}/data/databases/ \
+            --to-path-txn ${data_folder_prefix}/data/transactions/ \
+            --verbose '$db'"
+    fi
+    echo "Dry-run command"
+    echo neo4j-admin "$neo4j_restore_params"
 
     print_volumes_state
 
     echo "Now restoring"
-    neo4j-admin restore \
-        --from="$RESTORE_FROM" \
-        --database="$db" $FORCE_FLAG \
-        --to-data-directory ${data_folder_prefix}/data/databases/ \
-        --to-data-tx-directory ${data_folder_prefix}/data/transactions/ \
-        --move \
-        --verbose
+    neo4j-admin "$neo4j_restore_params"
 
     RESTORE_EXIT_CODE=$?
 
@@ -215,6 +218,8 @@ nexus_url="https://nexus3.linkurious.net"
 nexus_token="$NEXUS_TOKEN"
 dataset_neo4j_version="$DATASET_NEO4J_VERSION"
 data_folder_prefix=""
+neo4j_version=$(neo4j --version)
+neo4j_major=${neo4j_version%%.*}
 
 
 while getopts "n:p:u:dh" argument
