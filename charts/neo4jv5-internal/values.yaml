@@ -7,6 +7,7 @@ neo4j:
 
     # Uncomment to set the initial password
     # password: "my-initial-password"
+    passwordFromSecret: ""
 
     # Uncomment to use enterprise edition
     edition: "enterprise"

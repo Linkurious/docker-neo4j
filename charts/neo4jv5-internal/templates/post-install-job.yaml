@@ -37,7 +37,10 @@ spec:
             done
         envFrom:
           - secretRef:
-              # name: "{{ .Release.Name }}-auth"
-              name: "neo4jv5-internal-auth"
+            {{- if .Values.neo4j.neo4j.passwordFromSecret }}
+              name: "{{ .Values.neo4j.neo4j.passwordFromSecret }}-auth"
+            {{- else }}
+              name: "{{ .Values.neo4j.neo4j.name }}-auth"
+            {{- end }}
           - configMapRef:
               name: "{{ .Release.Name }}-user-config"
