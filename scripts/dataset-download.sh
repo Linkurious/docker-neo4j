@@ -158,7 +158,7 @@ function restore_database {
          --to-data-tx-directory ${data_folder_prefix}/data/transactions/ \
          --move \
          --verbose)
-    echo $neo4j_restore_params
+    echo $neo4j_restore_params[@]
     neo4j_restore="neo4j-admin restore \
          --from='$RESTORE_FROM' \
          --database='$db' $FORCE_FLAG \
