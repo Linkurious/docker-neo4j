@@ -158,28 +158,20 @@ function restore_database {
          --to-data-tx-directory ${data_folder_prefix}/data/transactions/ \
          --move \
          --verbose)
-    echo ${neo4j_restore_params[@]}
-    neo4j_restore="neo4j-admin restore \
-         --from='$RESTORE_FROM' \
-         --database='$db' $FORCE_FLAG \
-         --to-data-directory ${data_folder_prefix}/data/databases/ \
-         --to-data-tx-directory ${data_folder_prefix}/data/transactions/ \
-         --move \
-         --verbose"
     if [[  "$neo4j_major" == "5" ]]; then
-        neo4j_restore="neo4j-admin database restore \
+        neo4j_restore_params=(database restore \
             --from-path='$RESTORE_FROM' \
             --to-path-data ${data_folder_prefix}/data/databases/ \
             --to-path-txn ${data_folder_prefix}/data/transactions/ \
-            --verbose '$db'"
+            --verbose '$db')
     fi
     echo "Dry-run command"
-    echo "$neo4j_restore"
+    echo ${neo4j_restore_params[@]}
 
     print_volumes_state
 
     echo "Now restoring"
-    eval $neo4j_restore
+    neo4j-admin ${neo4j_restore_params[@]}
 
     RESTORE_EXIT_CODE=$?
 
