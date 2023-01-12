@@ -159,7 +159,7 @@ function restore_database {
          --move \
          --verbose"
     if [[  "$neo4j_major" == "5" ]]; then
-        neo4j_restore="neo4j-admin database restore \
+        neo4j_restor="neo4j-admin database restore \
             --from-path='$RESTORE_FROM' \
             --to-path-data ${data_folder_prefix}/data/databases/ \
             --to-path-txn ${data_folder_prefix}/data/transactions/ \
@@ -171,7 +171,7 @@ function restore_database {
     print_volumes_state
 
     echo "Now restoring"
-    eval $neo4j_restore_params
+    eval $neo4j_restore
 
     RESTORE_EXIT_CODE=$?
 
