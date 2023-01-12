@@ -1,0 +1,42 @@
+{{- if .Values.ingressRoute.enabled -}}
+{{- $fullName := include "neo4j-lke.fullname" . -}}
+{{- $svcPort := "http" -}}
+{{- $defaultHostUrl := include "neo4j-lke.defaultHostUrl" . -}}
+{{- if and .Values.ingressRoute.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.ingressRoute.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.ingressRoute.annotations "kubernetes.io/ingress.class" .Values.ingressRoute.className}}
+  {{- end }}
+{{- end }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "neo4j-lke.labels" . | nindent 4 }}
+  annotations:
+    link.argocd.argoproj.io/external-link: https://{{ $defaultHostUrl }}
+  {{- with .Values.ingressRoute.annotations }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if and .Values.ingressRoute.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.ingressRoute.className }}
+  {{- end }}
+  entryPoints:
+    - websecure
+  {{- if .Values.ingressRoute.tls }}
+  tls:
+    secretName: {{ .Values.ingressRoute.tls.secretName }}
+  {{- end }}
+  routes:
+    {{- range .Values.ingressRoute.hosts }}
+    - match: Host(`{{ .host | default $defaultHostUrl }}`)
+      kind: Rule
+      services:
+        - name: {{ $fullName }}-neo4j
+          port: {{ $svcPort }}
+            # middlewares:
+            #   - name: traefik-traefik-forward-auth@kubernetescrd
+    {{- end }}
+{{- end }}
