@@ -18,10 +18,6 @@ services:
       # Communication:
       - NEO4J_server_http_advertised__address=${PREFIX}neo4j.${TRAEFIK_HOST}:443
       - NEO4J_server_bolt_advertised__address=${PREFIX}neo4jbolt.${TRAEFIK_HOST}:443
-      # Memory:
-      - NEO4J_server_memory_heap_initial__size=512M
-      - NEO4J_server_memory_heap_max__size=512M
-      - NEO4J_server_memory_pagecache_size=512M
       # Metrics:
       - NEO4J_server_metrics_csv_enabled=false
       - NEO4J_server_metrics_prometheus_enabled=true

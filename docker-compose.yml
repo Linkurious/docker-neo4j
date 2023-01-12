@@ -26,9 +26,6 @@ services:
       - NEO4J_metrics_prometheus_endpoint=0.0.0.0:2004
       # Log4shell mitigation
       # - JAVA_TOOL_OPTIONS=-Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
-      - NEO4J_dbms_memory_heap_initial__size=512M
-      - NEO4J_dbms_memory_heap_max__size=512M
-      - NEO4J_dbms_memory_pagecache_size=512M
     labels:
       - "traefik.docker.network=traefik_network"
       - "traefik.enable=true"
