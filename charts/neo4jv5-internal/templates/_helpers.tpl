@@ -46,7 +46,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "neo4j-lke.selectorLabels" -}}
-helm.neo4j.com/neo4j.name: {{ .Release.Name }}
+helm.neo4j.com/neo4j.name: {{ .Values.neo4j.neo4j.name }}
 helm.neo4j.com/instance: {{ .Release.Name }}
 {{- end }}
 
