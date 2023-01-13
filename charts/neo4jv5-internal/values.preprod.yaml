@@ -17,8 +17,8 @@ neo4j:
     edition: "enterprise"
     acceptLicenseAgreement: "yes"
   config:
-    #dbms.connector.bolt.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:7687
-    #dbms.connector.https.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:443
+    # dbms.connector.bolt.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:7687
+    # dbms.connector.https.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:443
     DATASETS: aml-2.0.0,crunchbase-2.0.0,fincrime-2.0.0
     DATASET_NEO4J_VERSION: 5.3.0
 
