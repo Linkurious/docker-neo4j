@@ -89,7 +89,7 @@ function restore_database {
     #BACKUP_FILENAME="$db-$TIMESTAMP.tar.gz"
     BACKUP_FILENAME="${db}${dataset_extension}"
     RESTORE_FROM=uninitialized
-    if [[ $BACKUP_FILENAME =~ \.tar\.gz$ || $BACKUP_FILENAME =~ \.${dataset_extension}$]] ; then
+    if [[ $BACKUP_FILENAME =~ \.tar\.gz$ || $BACKUP_FILENAME =~ \.${dataset_extension}$ ]] ; then
         echo "Untarring backup file"
         cd "$RESTORE_ROOT" && tar --force-local --overwrite -zxvf "$BACKUP_FILENAME"
 
