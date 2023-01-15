@@ -245,3 +245,10 @@ com_crashlytics_export_strings.xml
 !.env.example
 backups
 plugins
+
+# charts
+*-secret.yaml
+template*.yaml
+Chart.lock
+!*-sealed-secret.yaml
+*.env

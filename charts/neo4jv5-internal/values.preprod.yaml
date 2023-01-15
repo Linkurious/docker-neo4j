@@ -1,0 +1,81 @@
+neo4j:
+  neo4j:
+    name: neo4jv5-internal
+    resources:
+      requests:
+        cpu: 1000m
+        memory: "2Gi"
+      limits:
+        cpu: 2000m
+        memory: "2Gi"
+
+    # Uncomment to set the initial password
+    # password: "my-initial-password"
+    passwordFromSecret: ""
+
+    # Uncomment to use enterprise edition
+    edition: "enterprise"
+    acceptLicenseAgreement: "yes"
+  config:
+    # dbms.connector.bolt.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:7687
+    # dbms.connector.https.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:443
+    DATASETS: aml-2.0.0,crunchbase-2.0.0,fincrime-2.0.0
+    DATASET_NEO4J_VERSION: 5.3.0
+
+  podSpec:
+    initContainers:
+      - name: git-sync
+        image: k8s.gcr.io/git-sync/git-sync:v3.6.2
+        env:
+        - name: GIT_SYNC_REPO
+          value: https://github.com/Linkurious/docker-neo4j
+        - name: GIT_SYNC_DEST
+          value: docker-neo4j
+        - name: GIT_SYNC_BRANCH
+          value: feature/DN4J-11
+        - name: GIT_SYNC_ONE_TIME
+          value: 'true'
+        volumeMounts:
+          - name: data
+            mountPath: /tmp/git/
+      - name: neo4j-restore
+          # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
+        command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
+        envFrom:
+          - secretRef:
+              name: neo4j-preprod-nexus-dataset # imports NEXUS_TOKEN
+        volumeMounts:
+          - name: data
+            mountPath: /data/
+          - name: neo4j-conf
+            mountPath: "/config/neo4j.conf"
+
+  volumes:
+    data:
+      mode: "volume"
+      volume:
+        emptyDir: {}
+  services:
+    neo4j:
+      spec:
+        type: ClusterIP
+
+##### Top level lke chart
+nameOverride: "neo4j"
+fullnameOverride: ""
+hostPostfix: k8s.dev.linkurious.net
+ingressRoute:
+  enabled: true
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - paths:
+        - path: /
+          pathType: ImplementationSpecific
+      # host: neo4j.k8s.dev.linkurious.net
+  tls:
+    secretName: wildcard-default-cert
+    hosts: []
+      # - chart-example.local
