@@ -17,8 +17,8 @@ neo4j:
     edition: "enterprise"
     acceptLicenseAgreement: "yes"
   config:
-    # dbms.connector.bolt.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:7687
-    # dbms.connector.https.advertised_address: neo4j-pr-23.neo4j-preprod.k8s.dev.linkurious.net:443
+
+    # used to workaround lack of config in helm chart
     DATASETS: aml-2.0.0,crunchbase-2.0.0,fincrime-2.0.0
     DATASET_NEO4J_VERSION: 5.3.0
 
@@ -50,32 +50,3 @@ neo4j:
           - name: neo4j-conf
             mountPath: "/config/neo4j.conf"
 
-  volumes:
-    data:
-      mode: "volume"
-      volume:
-        emptyDir: {}
-  services:
-    neo4j:
-      spec:
-        type: ClusterIP
-
-##### Top level lke chart
-nameOverride: "neo4j"
-fullnameOverride: ""
-hostPostfix: k8s.dev.linkurious.net
-ingressRoute:
-  enabled: true
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - paths:
-        - path: /
-          pathType: ImplementationSpecific
-      # host: neo4j.k8s.dev.linkurious.net
-  tls:
-    secretName: wildcard-default-cert
-    hosts: []
-      # - chart-example.local
