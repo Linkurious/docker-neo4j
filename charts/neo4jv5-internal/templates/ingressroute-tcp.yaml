@@ -31,7 +31,6 @@ spec:
   routes:
     {{- range .Values.ingressRoute.hosts }}
     - match: HostSNI(`{{ .host | default $defaultHostUrl }}`)
-      kind: Rule
       services:
         - name: {{ $fullName }}
           port: {{ $svcPort }}
