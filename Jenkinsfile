@@ -4,7 +4,7 @@ dockerJob {
   // General
   projectName = "linkurious/docker-neo4j"
 
-  helmReleaseBranch = "develop"
+  # helmReleaseBranch = "develop"
 
   githubRelease = true
 }
