@@ -1,0 +1,33 @@
+{{- $fullName := include "neo4j-lke.fullname" . -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name:  {{ $fullName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "neo4j-lke.labels" . | nindent 4 }}
+    release: kube-prometheus-stack
+spec:
+  jobLabel: traefik-metrics
+  selector:
+    matchLabels:
+      {{- include "neo4j-lke.selectorLabels" . | nindent 6 }}
+      helm.neo4j.com/service: admin
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  endpoints:
+  - port: tcp-prometheus
+    path: /metrics
+      # metricRelabelings:
+      #   - sourceLabels: [pod]
+      #     targetLabel: nodename
+      #       #regex: (.*)
+      #       #replacement: ${1}
+      #     action: replace
+      #   - sourceLabels: [service]
+      #     targetLabel: k8s_service
+      #     action: replace
+      #   - sourceLabels: [exported_service]
+      #     targetLabel: service
+      #     action: replace

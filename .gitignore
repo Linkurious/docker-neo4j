@@ -243,3 +243,12 @@ com_crashlytics_export_strings.xml
 #env files for docker-compose
 .env*
 !.env.example
+backups
+plugins
+
+# charts
+*-secret.yaml
+template*.yaml
+Chart.lock
+!*-sealed-secret.yaml
+*.env
