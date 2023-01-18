@@ -38,7 +38,7 @@ spec:
         envFrom:
           - secretRef:
             {{- if .Values.neo4j.neo4j.passwordFromSecret }}
-              name: "{{ .Values.neo4j.neo4j.passwordFromSecret }}-auth"
+              name: "{{ .Values.neo4j.neo4j.passwordFromSecret }}"
             {{- else }}
               name: "{{ .Values.neo4j.neo4j.name }}-auth"
             {{- end }}
