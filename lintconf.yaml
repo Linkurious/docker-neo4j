@@ -40,3 +40,5 @@ rules:
   trailing-spaces: enable
   truthy:
     level: warning
+ignore: |
+  charts/
