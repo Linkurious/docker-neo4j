@@ -17,13 +17,15 @@ ln -s .env.example .env
 ln -s .env.neo4j.example .env.neo4j.dev
 ```
 
-### Start neo4j v4
+### Start Neo4j
 Run with docker-compose
+Neo4j v4
+
 ```sh
 docker-compose up -d
 ```
+Neo4j v5
 
-### Start neo4j v5
 ```sh
 docker-compose -f docker-compose.v5.yml -f docker-compose.override.yml up -d
 ```
