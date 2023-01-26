@@ -7,7 +7,7 @@ services:
     # depends_on:
     #  - plugins-neo4j
     restart: unless-stopped
-    env_file: ".env.neo4j.${RUN_ENV}"
+    env_file: ".env.neo4j.v4.${RUN_ENV}"
     user: "${NEO4J_USER:-7474}:${NEO4J_GROUP:-7474}"
     environment:
       #- NEO4J_dbms_security_procedures_unrestricted=\*.\*

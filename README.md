@@ -24,9 +24,20 @@ docker-compose up -d
 ```
 
 ### Start neo4j v5
-Run with docker-compose
 ```sh
-docker-compose -f docker-compose.v5.yml up -d
+docker-compose -f docker-compose.v5.yml -f docker-compose.override.yml up -d
+```
+
+### Start Neo4j cluster
+Neo4j v4
+```sh
+docker-compose -f docker-compose.cluster.v4.yml -f docker-compose.override.yml up -d
+
+```
+Neo4j v5
+```sh
+docker-compose -f docker-compose.cluster.v5.yml -f docker-compose.override.yml up -d
+
 ```
 
 ## Browse database when working localy

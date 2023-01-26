@@ -2,12 +2,13 @@
 version: '3.7'
 
 services:
-  neo4j:
+  neo4j01:
+    hostname: neo4j01
     environment:
     - NEO4J_PLUGINS=["apoc"]
     volumes:
-      - neo4j_data:/data
-      - neo4j_datasets:/datasets:ro
+      - neo4j01_data:/data
+      - neo4j01_datasets:/datasets:ro
       - ./backups:/backups
       # - ./plugins:/plugins
       # - ./scripts:/scripts
@@ -15,8 +16,39 @@ services:
       - "7473:7473"  # https
       - "7474:7474"  # http
       - "7687:7687"  # bolt
+  neo4j02:
+    hostname: neo4j02
+    environment:
+    - NEO4J_PLUGINS=["apoc"]
+    volumes:
+      - neo4j02_data:/data
+      - neo4j02_datasets:/datasets:ro
+      - ./backups:/backups
+      # - ./plugins:/plugins
+      # - ./scripts:/scripts
+    ports:
+      - "8473:8473"  # https
+      - "8474:8474"  # http
+      - "8687:8687"  # bolt
+  neo4j03:
+    hostname: neo4j03
+    environment:
+    - NEO4J_PLUGINS=["apoc"]
+    volumes:
+      - neo4j03_data:/data
+      - neo4j03_datasets:/datasets:ro
+      - ./backups:/backups
+      # - ./plugins:/plugins
+      # - ./scripts:/scripts
+    ports:
+      - "9473:9473"  # https
+      - "9474:9474"  # http
+      - "9687:9687"  # bolt
 
 volumes:
-  neo4j_data:
-  neo4j_datasets:
-
+  neo4j01_data:
+  neo4j01_datasets:
+  neo4j02_data:
+  neo4j02_datasets:
+  neo4j03_data:
+  neo4j03_datasets:
