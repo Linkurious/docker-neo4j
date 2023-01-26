@@ -2,13 +2,12 @@
 version: '3.7'
 
 services:
-  neo4j01:
-    hostname: neo4j
+  neo4j:
     environment:
     - NEO4J_PLUGINS=["apoc"]
     volumes:
-      - neo4j01_data:/data
-      - neo4j01_datasets:/datasets:ro
+      - neo4j_data:/data
+      - neo4j_datasets:/datasets:ro
       - ./backups:/backups
       # - ./plugins:/plugins
       # - ./scripts:/scripts
@@ -18,9 +17,5 @@ services:
       - "7687:7687"  # bolt
 
 volumes:
-  neo4j01_data:
-  neo4j01_datasets:
-  neo4j02_data:
-  neo4j02_datasets:
-  neo4j03_data:
-  neo4j03_datasets:
+  neo4j_data:
+  neo4j_datasets:
