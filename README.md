@@ -14,7 +14,7 @@ Configure variables in .env. See .env.example for template.
 Reasonable defaults are provided. Simply use them when working localy.
 ```sh
 ln -s .env.example .env
-ln -s .env.neo4j.example .env.neo4j.dev
+ln -s .env.neo4j.v4.example .env.neo4j.v4.dev
 ```
 
 ### Start Neo4j
@@ -33,11 +33,13 @@ docker-compose -f docker-compose.v5.yml -f docker-compose.override.yml up -d
 ### Start Neo4j cluster
 Neo4j v4
 ```sh
+ln -s .env.neo4j.v4.example .env.neo4j.v4.dev
 docker-compose -f docker-compose.cluster.v4.yml -f docker-compose.cluster.override.yml up -d
 
 ```
 Neo4j v5
 ```sh
+ln -s .env.neo4j.v5.example .env.neo4j.v5.dev
 docker-compose -f docker-compose.cluster.v5.yml -f docker-compose.cluster.override.yml up -d
 
 ```
