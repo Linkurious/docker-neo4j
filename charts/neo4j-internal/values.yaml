@@ -13,7 +13,6 @@ neo4j-standalone:
   config:
     # dbms.connector.bolt.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:7687
     # dbms.connector.https.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:443
-    dbms.jvm.additional: -XX:+ExitOnOutOfMemoryError
     dbms.config.strict_validation: "false"
     dbms.allow_upgrade: 'true'
     dbms.security.authentication_providers: oidc-azure,native
@@ -76,6 +75,19 @@ neo4j-standalone:
       spec:
         type: ClusterIP
 
+  # Jvm configuration for Neo4j
+  jvm:
+    # If true any additional arguments are added after the Neo4j default jvm arguments.
+    # If false Neo4j default jvm arguments are not used.
+    useNeo4jDefaultJvmArguments: true
+    # additionalJvmArguments is a list of strings. Each jvm argument should be a separate element:
+    additionalJvmArguments:
+    - "-XX:+ExitOnOutOfMemoryError"
+    # - "-XX:+HeapDumpOnOutOfMemoryError"
+    # - "-XX:HeapDumpPath=/logs/neo4j.hprof"
+    # - "-XX:MaxMetaspaceSize=180m"
+    # - "-XX:ReservedCodeCacheSize=40m"
+
 ##### Top level lke chart
 nameOverride: "neo4j"
 fullnameOverride: ""
@@ -96,15 +108,3 @@ ingressRoute:
     hosts: []
       # - chart-example.local
 
-  # # Jvm configuration for Neo4j
-  # jvm:
-  #   # If true any additional arguments are added after the Neo4j default jvm arguments.
-  #   # If false Neo4j default jvm arguments are not used.
-  #   useNeo4jDefaultJvmArguments: true
-  #   # additionalJvmArguments is a list of strings. Each jvm argument should be a separate element:
-  #   additionalJvmArguments:
-  #   - "-XX:+ExitOnOutOfMemoryError"
-  #   # - "-XX:+HeapDumpOnOutOfMemoryError"
-  #   # - "-XX:HeapDumpPath=/logs/neo4j.hprof"
-  #   # - "-XX:MaxMetaspaceSize=180m"
-  #   # - "-XX:ReservedCodeCacheSize=40m"
