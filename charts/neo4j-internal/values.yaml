@@ -13,6 +13,7 @@ neo4j-standalone:
   config:
     # dbms.connector.bolt.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:7687
     # dbms.connector.https.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:443
+    dbms.jvm.additional: -XX:+ExitOnOutOfMemoryError
     dbms.config.strict_validation: "false"
     dbms.allow_upgrade: 'true'
     dbms.security.authentication_providers: oidc-azure,native
