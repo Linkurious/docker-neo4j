@@ -78,6 +78,19 @@ neo4j:
       spec:
         type: ClusterIP
 
+  # Jvm configuration for Neo4j
+  jvm:
+    # If true any additional arguments are added after the Neo4j default jvm arguments.
+    # If false Neo4j default jvm arguments are not used.
+    useNeo4jDefaultJvmArguments: true
+    # additionalJvmArguments is a list of strings. Each jvm argument should be a separate element:
+    additionalJvmArguments:
+      - "-XX:+ExitOnOutOfMemoryError"
+    # - "-XX:+HeapDumpOnOutOfMemoryError"
+    # - "-XX:HeapDumpPath=/logs/neo4j.hprof"
+    # - "-XX:MaxMetaspaceSize=180m"
+    # - "-XX:ReservedCodeCacheSize=40m"
+
 ##### Top level lke chart
 nameOverride: "neo4j"
 fullnameOverride: ""
