@@ -23,7 +23,7 @@ neo4j:
       "86b0df6b-ec62-41f6-9250-d22e951755fa" = admin;
 
     # used to workaround lack of config in helm chart
-    DATASETS: aml-2.0.0,crunchbase-2.0.0,fincrime-sales-2.0.0,insurance-fraud-2.0.0,lineage-2.0.0,online-lending-2.0.0,polegraph-2.0.0,unemployment-fraud-2.0.0
+    DATASETS: aml-2.0.0,crunchbase-2.0.0,fincrime-sales-2.0.0,insurance-fraud-2.0.0,lineage-2.0.0,online-lending-2.0.0,polegraph-2.0.0,unemployment-insurance-2.0.0
     DATASET_NEO4J_VERSION: 5.3.0
 
   podSpec:
