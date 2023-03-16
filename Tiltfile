@@ -15,8 +15,9 @@ if not k8s_namespace().endswith("dev"):
   fail("You are not targeting a dev namespace")
 builder = "builder-" + k8s_namespace()
 
+neo4j_workload_name = ctx.removesuffix('@k8s-dev') + '-tilt-neo4jv5'
 helm_resource(
-  name=ctx.removesuffix('@k8s-dev') + '-tilt-neo4jv5',
+  name=neo4j_workload_name,
   chart='charts/neo4jv5-internal',
   deps=['charts/neo4jv5-internal'],
   namespace='neo4j-dev',
@@ -24,3 +25,8 @@ helm_resource(
   # image_deps=['linkurious-server'],
   # image_keys=[('linkurious-enterprise.image.repository','linkurious-enterprise.image.tag')]
   )
+k8s_resource(workload=neo4j_workload_name,
+  links=[
+      neo4j_workload_name + '.neo4j-dev.k8s.dev.linkurious.net',
+  ]
+)
