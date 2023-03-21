@@ -35,7 +35,7 @@ neo4j:
     server.metrics.prometheus.endpoint: '0.0.0.0:2004'
 
     # used to workaround lack of config in helm chart
-    DATASETS: crunchbase-2.0.0
+    DATASETS: crunchbase-2.0.0,polegraph-2.0.0
     DATASET_NEO4J_VERSION: 5.3.0
   env:
     NEO4JLABS_PLUGINS: '["apoc"]'
