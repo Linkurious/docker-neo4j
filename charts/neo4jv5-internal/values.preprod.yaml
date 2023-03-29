@@ -19,7 +19,7 @@ neo4j:
   config:
 
     # used to workaround lack of config in helm chart
-    DATASETS: aml-2.0.0,crunchbase-2.0.0,fincrime-2.0.0
+    DATASETS: aml-2.0.1,crunchbase-2.0.0,fincrime-2.0.0
     DATASET_NEO4J_VERSION: 5.3.0
 
   podSpec:
