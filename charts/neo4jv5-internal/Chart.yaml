@@ -21,10 +21,10 @@ version: 0.0.2
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "5.3.0"
+appVersion: "5.5.0"
 dependencies:
   - name: neo4j
-    version: 5.3.0
+    version: 5.5.0
     repository: https://helm.neo4j.com/neo4j
 maintainers:
   - name: enys
