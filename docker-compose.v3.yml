@@ -3,7 +3,7 @@ version: '3.9'
 
 services:
   neo4j:
-    image: neo4j:4.4.14-enterprise
+    image: neo4j:4.4.19-enterprise
     # depends_on:
     #  - plugins-neo4j
     restart: unless-stopped
