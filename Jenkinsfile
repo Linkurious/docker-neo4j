@@ -6,5 +6,7 @@ dockerJob {
 
   // helmReleaseBranch = "develop"
 
+  createGitTag = true
+  runBookeeping = true
   githubRelease = true
 }
