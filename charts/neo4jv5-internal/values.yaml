@@ -7,7 +7,8 @@ neo4j:
 
     # Uncomment to set the initial password
     # password: "my-initial-password"
-    passwordFromSecret: ""
+    # passwordFromSecret: ""
+    passwordFromSecret: "neo4j-admin-auth"
     passwordFromSecretLookup: false
 
     # Uncomment to use enterprise edition
@@ -43,7 +44,7 @@ neo4j:
   podSpec:
     initContainers:
       - name: git-sync
-        image: k8s.gcr.io/git-sync/git-sync:v3.6.2
+        image: registry.k8s.io/git-sync/git-sync:v3.6.2
         env:
         - name: GIT_SYNC_REPO
           value: https://github.com/Linkurious/docker-neo4j
@@ -77,6 +78,19 @@ neo4j:
     neo4j:
       spec:
         type: ClusterIP
+
+  # Jvm configuration for Neo4j
+  jvm:
+    # If true any additional arguments are added after the Neo4j default jvm arguments.
+    # If false Neo4j default jvm arguments are not used.
+    useNeo4jDefaultJvmArguments: true
+    # additionalJvmArguments is a list of strings. Each jvm argument should be a separate element:
+    additionalJvmArguments:
+      - "-XX:+ExitOnOutOfMemoryError"
+    # - "-XX:+HeapDumpOnOutOfMemoryError"
+    # - "-XX:HeapDumpPath=/logs/neo4j.hprof"
+    # - "-XX:MaxMetaspaceSize=180m"
+    # - "-XX:ReservedCodeCacheSize=40m"
 
 ##### Top level lke chart
 nameOverride: "neo4j"
