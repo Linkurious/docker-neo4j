@@ -7,7 +7,8 @@ neo4j:
 
     # Uncomment to set the initial password
     # password: "my-initial-password"
-    passwordFromSecret: ""
+    # passwordFromSecret: ""
+    passwordFromSecret: "neo4j-admin-auth"
     passwordFromSecretLookup: false
 
     # Uncomment to use enterprise edition
@@ -43,7 +44,7 @@ neo4j:
   podSpec:
     initContainers:
       - name: git-sync
-        image: k8s.gcr.io/git-sync/git-sync:v3.6.2
+        image: registry.k8s.io/git-sync/git-sync:v3.6.2
         env:
         - name: GIT_SYNC_REPO
           value: https://github.com/Linkurious/docker-neo4j

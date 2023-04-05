@@ -1,4 +1,5 @@
 neo4j:
+  disableLookups: true
   neo4j:
     name: neo4jv5-internal
     resources:
