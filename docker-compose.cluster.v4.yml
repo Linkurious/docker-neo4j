@@ -3,7 +3,7 @@ version: '3.9'
 
 services:
   neo4j01:
-    image: neo4j:${NEO4J_VERSION:-4.4.16-enterprise}
+    image: neo4j:${NEO4J_VERSION:-4.4.19-enterprise}
     restart: unless-stopped
     env_file:
     - ".env.neo4j.v4.${RUN_ENV}"
@@ -48,7 +48,7 @@ services:
     networks:
       - traefik_network
   neo4j02:
-    image: neo4j:${NEO4J_VERSION:-4.4.16-enterprise}
+    image: neo4j:${NEO4J_VERSION:-4.4.19-enterprise}
     restart: unless-stopped
     env_file:
     - ".env.neo4j.v4.${RUN_ENV}"
@@ -93,7 +93,7 @@ services:
     networks:
       - traefik_network
   neo4j03:
-    image: neo4j:${NEO4J_VERSION:-4.4.16-enterprise}
+    image: neo4j:${NEO4J_VERSION:-4.4.19-enterprise}
     restart: unless-stopped
     env_file:
     - ".env.neo4j.v4.${RUN_ENV}"
