@@ -34,6 +34,7 @@ function print_volumes_state {
 }
 
 function restore_database {
+    sleep 1000
     db=$1
 
     echo ""
@@ -202,6 +203,7 @@ function restore_database {
     fi
 
     echo "RESTORE OF $db COMPLETE"
+    sleep 1000
 }
 
 ##########
