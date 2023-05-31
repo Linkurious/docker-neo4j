@@ -19,6 +19,7 @@ function download_dataset
   full_dataset_name=$1
   restore_path=$2
   dataset_name=${full_dataset_name%-*}
+  dataset_neo4j_version=$3
 
   echo "Downloading ${full_dataset_name} from ${nexus_url} for neo4j ${dataset_neo4j_version}"
 
@@ -34,8 +35,9 @@ function print_volumes_state {
 }
 
 function restore_database {
-    sleep 1000
+
     db=$1
+    neo4j_version=$2
 
     echo ""
     echo "=== RESTORE $db"
@@ -72,7 +74,7 @@ function restore_database {
     echo "Making restore directory"
     mkdir -p "$RESTORE_ROOT"
 
-  download_dataset "$db" "$RESTORE_ROOT"
+  download_dataset "$db" "$RESTORE_ROOT" "$neo4j_version"
 
     if [ $? -ne 0 ] ; then
         echo "Cannot restore $db"
@@ -203,7 +205,6 @@ function restore_database {
     fi
 
     echo "RESTORE OF $db COMPLETE"
-    sleep 1000
 }
 
 ##########
@@ -211,14 +212,15 @@ function restore_database {
 ##########
 if [[ -z $DATASETS ]]; then
   echo "getting from neo config"
-  DATASETS=$(cat /config/neo4j.conf/DATASETS)
-  DATASET_NEO4J_VERSION=$(cat /config/neo4j.conf/DATASET_NEO4J_VERSION)
+  DATASETS=$(cat /config/neo4j.conf/DATASETS_JSON)
+#   DATASETS=$(cat /config/neo4j.conf/DATASETS)
+#   DATASET_NEO4J_VERSION=$(cat /config/neo4j.conf/DATASET_NEO4J_VERSION)
 fi
 
 debug=""
 nexus_url="https://nexus3.linkurious.net"
 nexus_token="$NEXUS_TOKEN"
-dataset_neo4j_version="$DATASET_NEO4J_VERSION"
+# dataset_neo4j_version="$DATASET_NEO4J_VERSION"
 data_folder_prefix=""
 neo4j_version=$(neo4j --version)
 neo4j_major=${neo4j_version%%.*}
@@ -240,15 +242,32 @@ do
   esac
 done
 
-if [[ -z $dataset_neo4j_version ]]; then
-  echo "Missing dataset_neo4j_version"
-  usage
-fi
+# if [[ -z $dataset_neo4j_version ]]; then
+#   echo "Missing dataset_neo4j_version"
+#   usage
+# fi
 
-# Split by comma
-IFS=","
-read -a datasets <<< "$DATASETS"
-for db in "${datasets[@]}"; do
-  restore_database "$db"
-  print_volumes_state
+# # Split by comma
+# IFS=","
+# read -a datasets <<< "$DATASETS"
+# for db in "${datasets[@]}"; do
+#   restore_database "$db"
+#   print_volumes_state
+# done
+
+# for db in $(echo "$DATASETS" | jq -r '.[].name'); do
+#   restore_database "$db"
+#   print_volumes_state
+# done
+
+for dataset in $(echo "${DATASETS}" | jq -r '.[]'); do
+    _jq() {
+     echo "${dataset}" | jq -r "${1}"
+    }
+
+    db=$(_jq '.name')
+    neo4j_version=$(_jq '.neo4j_version')
+
+    restore_database "$db" "$neo4j_version"
+    print_volumes_state
 done
