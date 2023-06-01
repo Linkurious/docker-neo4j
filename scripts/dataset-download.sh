@@ -260,13 +260,10 @@ done
 #   print_volumes_state
 # done
 
-for dataset in $(echo "${DATASETS}" | jq -r '.[]'); do
-    _jq() {
-     echo "${dataset}" | jq -r "${1}"
-    }
+for dataset in $(echo "${DATASETS}" | jq -c '.[]'); do
 
-    db=$(_jq '.name')
-    neo4j_version=$(_jq '.neo4j_version')
+    db=$(echo "$dataset" | jq -r '.name')
+    neo4j_version=$(echo "$dataset" | jq -r '.neo4j_version')
 
     restore_database "$db" "$neo4j_version"
     print_volumes_state

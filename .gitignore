@@ -252,3 +252,4 @@ template*.yaml
 Chart.lock
 !*-sealed-secret.yaml
 *.env
+*.tgz
