@@ -149,8 +149,8 @@ function restore_database {
     du -hs "$RESTORE_FROM"
 
     # Destination docker directories.
-    mkdir -p "${data_folder_prefix}"/data/databases
-    mkdir -p "${data_folder_prefix}"/data/transactions
+    mkdir -p "${data_folder_prefix}/data/databases"
+    mkdir -p "${data_folder_prefix}/data/transactions"
 
     cd /data && \
 
