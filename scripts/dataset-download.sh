@@ -214,14 +214,11 @@ function restore_database {
 if [[ -z $DATASETS ]]; then
   echo "getting from neo config"
   DATASETS=$(cat /config/neo4j.conf/DATASETS_JSON)
-#   DATASETS=$(cat /config/neo4j.conf/DATASETS)
-#   DATASET_NEO4J_VERSION=$(cat /config/neo4j.conf/DATASET_NEO4J_VERSION)
 fi
 
 debug=""
 nexus_url="https://nexus3.linkurious.net"
 nexus_token="$NEXUS_TOKEN"
-# dataset_neo4j_version="$DATASET_NEO4J_VERSION"
 data_folder_prefix=""
 neo4j_version=$(neo4j --version)
 neo4j_major=${neo4j_version%%.*}
@@ -243,23 +240,6 @@ do
   esac
 done
 
-# if [[ -z $dataset_neo4j_version ]]; then
-#   echo "Missing dataset_neo4j_version"
-#   usage
-# fi
-
-# # Split by comma
-# IFS=","
-# read -a datasets <<< "$DATASETS"
-# for db in "${datasets[@]}"; do
-#   restore_database "$db"
-#   print_volumes_state
-# done
-
-# for db in $(echo "$DATASETS" | jq -r '.[].name'); do
-#   restore_database "$db"
-#   print_volumes_state
-# done
 
 for dataset in $(echo "${DATASETS}" | jq -c '.[]'); do
 
