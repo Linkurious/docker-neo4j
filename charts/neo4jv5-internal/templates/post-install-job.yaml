@@ -29,12 +29,10 @@ spec:
           - -c
           - |
             set -e
-            sleep 10
             for dataset in $(echo "$DATASETS_JSON" | jq -r '.[].name'); do
               echo "Creating database ${dataset}"
               cypher-shell -a {{ .Release.Name }} -d 'system' -u 'neo4j'  -p ${NEO4J_AUTH#*/} "CREATE DATABASE \`${dataset}\` IF NOT EXISTS"
             done
-            sleep 1000
         envFrom:
           - secretRef:
             {{- if .Values.neo4j.neo4j.passwordFromSecret }}
