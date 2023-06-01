@@ -1,5 +1,4 @@
 #!/bin/bash
-# shellcheck disable=SC2153
 
 set -o pipefail
 set -e
@@ -18,9 +17,9 @@ function usage
 function download_dataset
 {
   full_dataset_name=$1
-  restore_path=$2
+  dataset_neo4j_version=$2
   dataset_name=${full_dataset_name%-*}
-  dataset_neo4j_version=$3
+  restore_path=$3
 
   echo "Downloading ${full_dataset_name} from ${nexus_url} for neo4j ${dataset_neo4j_version}"
 
@@ -75,7 +74,7 @@ function restore_database {
     echo "Making restore directory"
     mkdir -p "$RESTORE_ROOT"
 
-  download_dataset "$db" "$RESTORE_ROOT" "$neo4j_version"
+  download_dataset "$db" "$neo4j_version" "$RESTORE_ROOT"
 
     if [ $? -ne 0 ] ; then
         echo "Cannot restore $db"
@@ -158,15 +157,15 @@ function restore_database {
     neo4j_restore_params=(restore \
          --from="$RESTORE_FROM" \
          --database="$db" "$FORCE_FLAG" \
-         --to-data-directory "${data_folder_prefix}"/data/databases/ \
-         --to-data-tx-directory "${data_folder_prefix}"/data/transactions/ \
+         --to-data-directory "${data_folder_prefix}/data/databases/" \
+         --to-data-tx-directory "${data_folder_prefix}/data/transactions/" \
          --move \
          --verbose)
     if [[  "$neo4j_major" == "5" ]]; then
         neo4j_restore_params=(database restore \
             --from-path="$RESTORE_FROM" \
-            --to-path-data "${data_folder_prefix}"/data/databases/ \
-            --to-path-txn "${data_folder_prefix}"/data/transactions/ \
+            --to-path-data "${data_folder_prefix}/data/databases/" \
+            --to-path-txn "${data_folder_prefix}/data/transactions/" \
             --verbose "$db")
     fi
     echo "Dry-run command"
@@ -187,10 +186,10 @@ function restore_database {
     fi
 
     # Modify permissions/group, because we're running as root.
-    chown -R neo4j "${data_folder_prefix}"/data/databases
-    chown -R neo4j "${data_folder_prefix}"/data/transactions
-    chgrp -R neo4j "${data_folder_prefix}"/data/databases
-    chgrp -R neo4j "${data_folder_prefix}"/data/transactions
+    chown -R neo4j "${data_folder_prefix}/data/databases"
+    chown -R neo4j "${data_folder_prefix}/data/transactions"
+    chgrp -R neo4j "${data_folder_prefix}/data/databases"
+    chgrp -R neo4j "${data_folder_prefix}/data/transactions"
 
     echo "Final permissions"
     ls -al "${data_folder_prefix}/data/databases/$db"
@@ -218,6 +217,7 @@ fi
 
 debug=""
 nexus_url="https://nexus3.linkurious.net"
+# shellcheck disable=SC2153
 nexus_token="$NEXUS_TOKEN"
 data_folder_prefix=""
 neo4j_version=$(neo4j --version)
