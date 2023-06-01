@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2153
 
 set -o pipefail
 set -e
@@ -149,32 +150,32 @@ function restore_database {
     du -hs "$RESTORE_FROM"
 
     # Destination docker directories.
-    mkdir -p ${data_folder_prefix}/data/databases
-    mkdir -p ${data_folder_prefix}/data/transactions
+    mkdir -p "${data_folder_prefix}"/data/databases
+    mkdir -p "${data_folder_prefix}"/data/transactions
 
     cd /data && \
 
     neo4j_restore_params=(restore \
          --from="$RESTORE_FROM" \
-         --database="$db" $FORCE_FLAG \
-         --to-data-directory ${data_folder_prefix}/data/databases/ \
-         --to-data-tx-directory ${data_folder_prefix}/data/transactions/ \
+         --database="$db" "$FORCE_FLAG" \
+         --to-data-directory "${data_folder_prefix}"/data/databases/ \
+         --to-data-tx-directory "${data_folder_prefix}"/data/transactions/ \
          --move \
          --verbose)
     if [[  "$neo4j_major" == "5" ]]; then
         neo4j_restore_params=(database restore \
             --from-path="$RESTORE_FROM" \
-            --to-path-data ${data_folder_prefix}/data/databases/ \
-            --to-path-txn ${data_folder_prefix}/data/transactions/ \
+            --to-path-data "${data_folder_prefix}"/data/databases/ \
+            --to-path-txn "${data_folder_prefix}"/data/transactions/ \
             --verbose "$db")
     fi
     echo "Dry-run command"
-    echo ${neo4j_restore_params[@]}
+    echo "${neo4j_restore_params[@]}"
 
     print_volumes_state
 
     echo "Now restoring"
-    neo4j-admin ${neo4j_restore_params[@]}
+    neo4j-admin "${neo4j_restore_params[@]}"
 
     RESTORE_EXIT_CODE=$?
 
@@ -186,10 +187,10 @@ function restore_database {
     fi
 
     # Modify permissions/group, because we're running as root.
-    chown -R neo4j ${data_folder_prefix}/data/databases
-    chown -R neo4j ${data_folder_prefix}/data/transactions
-    chgrp -R neo4j ${data_folder_prefix}/data/databases
-    chgrp -R neo4j ${data_folder_prefix}/data/transactions
+    chown -R neo4j "${data_folder_prefix}"/data/databases
+    chown -R neo4j "${data_folder_prefix}"/data/transactions
+    chgrp -R neo4j "${data_folder_prefix}"/data/databases
+    chgrp -R neo4j "${data_folder_prefix}"/data/transactions
 
     echo "Final permissions"
     ls -al "${data_folder_prefix}/data/databases/$db"
