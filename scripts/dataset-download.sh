@@ -17,8 +17,9 @@ function usage
 function download_dataset
 {
   full_dataset_name=$1
-  restore_path=$2
+  dataset_neo4j_version=$2
   dataset_name=${full_dataset_name%-*}
+  restore_path=$3
 
   echo "Downloading ${full_dataset_name} from ${nexus_url} for neo4j ${dataset_neo4j_version}"
 
@@ -34,7 +35,9 @@ function print_volumes_state {
 }
 
 function restore_database {
+
     db=$1
+    neo4j_version=$2
 
     echo ""
     echo "=== RESTORE $db"
@@ -71,7 +74,7 @@ function restore_database {
     echo "Making restore directory"
     mkdir -p "$RESTORE_ROOT"
 
-  download_dataset "$db" "$RESTORE_ROOT"
+  download_dataset "$db" "$neo4j_version" "$RESTORE_ROOT"
 
     if [ $? -ne 0 ] ; then
         echo "Cannot restore $db"
@@ -146,32 +149,32 @@ function restore_database {
     du -hs "$RESTORE_FROM"
 
     # Destination docker directories.
-    mkdir -p ${data_folder_prefix}/data/databases
-    mkdir -p ${data_folder_prefix}/data/transactions
+    mkdir -p "${data_folder_prefix}/data/databases"
+    mkdir -p "${data_folder_prefix}/data/transactions"
 
     cd /data && \
 
     neo4j_restore_params=(restore \
          --from="$RESTORE_FROM" \
-         --database="$db" $FORCE_FLAG \
-         --to-data-directory ${data_folder_prefix}/data/databases/ \
-         --to-data-tx-directory ${data_folder_prefix}/data/transactions/ \
+         --database="$db" "$FORCE_FLAG" \
+         --to-data-directory "${data_folder_prefix}/data/databases/" \
+         --to-data-tx-directory "${data_folder_prefix}/data/transactions/" \
          --move \
          --verbose)
     if [[  "$neo4j_major" == "5" ]]; then
         neo4j_restore_params=(database restore \
             --from-path="$RESTORE_FROM" \
-            --to-path-data ${data_folder_prefix}/data/databases/ \
-            --to-path-txn ${data_folder_prefix}/data/transactions/ \
+            --to-path-data "${data_folder_prefix}/data/databases/" \
+            --to-path-txn "${data_folder_prefix}/data/transactions/" \
             --verbose "$db")
     fi
     echo "Dry-run command"
-    echo ${neo4j_restore_params[@]}
+    echo "${neo4j_restore_params[@]}"
 
     print_volumes_state
 
     echo "Now restoring"
-    neo4j-admin ${neo4j_restore_params[@]}
+    neo4j-admin "${neo4j_restore_params[@]}"
 
     RESTORE_EXIT_CODE=$?
 
@@ -183,10 +186,10 @@ function restore_database {
     fi
 
     # Modify permissions/group, because we're running as root.
-    chown -R neo4j ${data_folder_prefix}/data/databases
-    chown -R neo4j ${data_folder_prefix}/data/transactions
-    chgrp -R neo4j ${data_folder_prefix}/data/databases
-    chgrp -R neo4j ${data_folder_prefix}/data/transactions
+    chown -R neo4j "${data_folder_prefix}/data/databases"
+    chown -R neo4j "${data_folder_prefix}/data/transactions"
+    chgrp -R neo4j "${data_folder_prefix}/data/databases"
+    chgrp -R neo4j "${data_folder_prefix}/data/transactions"
 
     echo "Final permissions"
     ls -al "${data_folder_prefix}/data/databases/$db"
@@ -209,14 +212,13 @@ function restore_database {
 ##########
 if [[ -z $DATASETS ]]; then
   echo "getting from neo config"
-  DATASETS=$(cat /config/neo4j.conf/DATASETS)
-  DATASET_NEO4J_VERSION=$(cat /config/neo4j.conf/DATASET_NEO4J_VERSION)
+  DATASETS=$(cat /config/neo4j.conf/DATASETS_JSON)
 fi
 
 debug=""
 nexus_url="https://nexus3.linkurious.net"
+# shellcheck disable=SC2153
 nexus_token="$NEXUS_TOKEN"
-dataset_neo4j_version="$DATASET_NEO4J_VERSION"
 data_folder_prefix=""
 neo4j_version=$(neo4j --version)
 neo4j_major=${neo4j_version%%.*}
@@ -238,15 +240,12 @@ do
   esac
 done
 
-if [[ -z $dataset_neo4j_version ]]; then
-  echo "Missing dataset_neo4j_version"
-  usage
-fi
 
-# Split by comma
-IFS=","
-read -a datasets <<< "$DATASETS"
-for db in "${datasets[@]}"; do
-  restore_database "$db"
-  print_volumes_state
+for dataset in $(echo "${DATASETS}" | jq -c '.[]'); do
+
+    db=$(echo "$dataset" | jq -r '.name')
+    neo4j_version=$(echo "$dataset" | jq -r '.neo4j_version')
+
+    restore_database "$db" "$neo4j_version"
+    print_volumes_state
 done

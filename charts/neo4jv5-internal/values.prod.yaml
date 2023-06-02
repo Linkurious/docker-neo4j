@@ -24,8 +24,49 @@ neo4j:
       "86b0df6b-ec62-41f6-9250-d22e951755fa" = admin;
 
     # used to workaround lack of config in helm chart
-    DATASETS: aml-2.0.1,dhs-2.0.1,crunchbase-2.0.0,fincrime-sales-2.0.1,insurance-fraud-2.0.0,lineage-2.0.0,online-lending-2.0.1,polegraph-2.0.1,unemployment-insurance-2.0.1,supply-chain-risk-management-2.0.0
-    DATASET_NEO4J_VERSION: 5.3.0
+    DATASETS_JSON: |-
+      [
+        {
+          "name": "aml-2.0.1",
+          "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "dhs-2.0.1",
+          "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "crunchbase-2.0.0",
+          "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "fincrime-sales-2.0.1",
+          "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "insurance-fraud-2.0.0",
+          "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "lineage-2.0.0",
+          "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "online-lending-2.0.1",
+          "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "polegraph-2.0.1",
+          "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "unemployment-insurance-2.0.1",
+          "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "supply-chain-risk-management-2.0.0",
+          "neo4j_version": "5.5.0"
+        }
+      ]
 
   podSpec:
     initContainers:
