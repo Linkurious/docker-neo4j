@@ -30,7 +30,7 @@ neo4j-standalone:
         - name: GIT_SYNC_DEST
           value: docker-neo4j
         - name: GIT_SYNC_BRANCH
-          value: DN4J-21-Multiple-neo4j-versions-for-datasets
+          value: develop
         - name: GIT_SYNC_ONE_TIME
           value: 'true'
         volumeMounts:
