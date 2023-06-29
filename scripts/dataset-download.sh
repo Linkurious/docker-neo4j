@@ -154,10 +154,10 @@ function restore_database {
 
     cd /data && \
 
+    # shellcheck disable=SC2206
     neo4j_restore_params=(restore \
          --from="$RESTORE_FROM" \
          # do not fix lint quote on force_flag otherwise we have errors on script
-         # shellcheck disable=SC2206
          --database="$db" $FORCE_FLAG \
          --to-data-directory "${data_folder_prefix}/data/databases/" \
          --to-data-tx-directory "${data_folder_prefix}/data/transactions/" \
