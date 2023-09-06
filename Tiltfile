@@ -29,6 +29,6 @@ helm_resource(
   )
 k8s_resource(workload=neo4j_workload_name,
   links=[
-      neo4j_workload_name + '.neo4j-dev.k8s.dev.linkurious.net',
+      neo4j_release_name + '.neo4j-dev.k8s.dev.linkurious.net',
   ]
 )
