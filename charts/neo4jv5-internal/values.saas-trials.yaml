@@ -65,7 +65,7 @@ neo4j:
         command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
         envFrom:
           - secretRef:
-              name: neo4j-prod-nexus-dataset # imports NEXUS_TOKEN
+              name: neo4j-saas-nexus-dataset # imports NEXUS_TOKEN
         volumeMounts:
           - name: data
             mountPath: /data/
