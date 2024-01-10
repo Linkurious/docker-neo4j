@@ -29,7 +29,7 @@ neo4j:
     dbms.security.oidc.azure.params: "client_id=53d9ec2c-b8dd-4e1e-96a2-b9c484205353;response_type=code;scope=openid profile email"
     dbms.security.oidc.azure.config: "token_type_principal=id_token;token_type_authentication=id_token"
     dbms.security.oidc.azure.authorization.group_to_role_mapping: |
-      "86b0df6b-ec62-41f6-9250-d22e951755fa" = admin; \
+      "898f17fd-e481-4f80-a578-8d25b0774206" = admin; \
       "1e27ad10-142d-4921-8408-055b422f32f5" = reader
     metrics.prometheus.enabled: 'true'
     server.metrics.prometheus.enabled: 'true'
