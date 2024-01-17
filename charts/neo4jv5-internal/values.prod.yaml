@@ -21,7 +21,7 @@ neo4j:
     dbms.security.oidc.azure.audience: 0d51e3f5-5053-4d39-81f2-a49ba2978e69
     dbms.security.oidc.azure.params: "client_id=0d51e3f5-5053-4d39-81f2-a49ba2978e69;response_type=code;scope=openid profile email"
     dbms.security.oidc.azure.authorization.group_to_role_mapping: |
-      "86b0df6b-ec62-41f6-9250-d22e951755fa" = admin;
+      "898f17fd-e481-4f80-a578-8d25b0774206" = admin;
 
     # used to workaround lack of config in helm chart
     DATASETS_JSON: |-
