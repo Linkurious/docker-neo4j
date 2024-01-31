@@ -41,7 +41,7 @@ neo4j-standalone:
       ]
 
   env:
-    NEO4JLABS_PLUGINS: '["apoc"]'
+    NEO4J_PLUGINS: '["apoc"]'
 
   apoc_config:
    apoc.trigger.enabled: "true"
