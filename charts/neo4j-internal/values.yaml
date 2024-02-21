@@ -1,5 +1,7 @@
 neo4j-standalone:
   neo4j:
+    labels:
+      app.kubernetes.io/name: "neo4j-internal"
     resources:
       cpu: "0.5"
       memory: "2Gi"
