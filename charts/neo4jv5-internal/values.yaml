@@ -1,6 +1,8 @@
 neo4j:
   neo4j:
     name: neo4jv5-internal
+    labels:
+      app.kubernetes.io/name: "neo4jv5-internal"
     resources:
       cpu: "500m"
       memory: "2Gi"
