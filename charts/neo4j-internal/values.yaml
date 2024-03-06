@@ -1,8 +1,19 @@
 neo4j-standalone:
   neo4j:
+    labels:
+      app.kubernetes.io/name: "neo4j-internal"
     resources:
       cpu: "0.5"
       memory: "2Gi"
+
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 7474
+      runAsGroup: 7474
+      fsGroup: 7474
+      capabilities:
+        drop: ['ALL']
+      allowPrivilegeEscalation: false
 
     # Uncomment to set the initial password
     # password: "my-initial-password"

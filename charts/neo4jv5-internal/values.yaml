@@ -1,9 +1,20 @@
 neo4j:
   neo4j:
     name: neo4jv5-internal
+    labels:
+      app.kubernetes.io/name: "neo4jv5-internal"
     resources:
       cpu: "500m"
       memory: "2Gi"
+
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 7474
+      runAsGroup: 7474
+      fsGroup: 7474
+      capabilities:
+        drop: ['ALL']
+      allowPrivilegeEscalation: false
 
     # Uncomment to set the initial password
     # password: "my-initial-password"
