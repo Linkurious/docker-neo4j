@@ -9,7 +9,7 @@ neo4j:
     fsGroup: 7474
     # capabilities:
     #   drop: ['ALL']
-    allowPrivilegeEscalation: false
+    # allowPrivilegeEscalation: false
 
   neo4j:
     name: neo4jv5-internal
