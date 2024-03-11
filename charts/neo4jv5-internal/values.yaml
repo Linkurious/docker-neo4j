@@ -7,8 +7,8 @@ neo4j:
     runAsUser: 7474
     runAsGroup: 7474
     fsGroup: 7474
-    capabilities:
-      drop: ['ALL']
+    # capabilities:
+    #   drop: ['ALL']
     allowPrivilegeEscalation: false
 
   neo4j:
