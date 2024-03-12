@@ -2,7 +2,7 @@
 
 neo4j:
 
-  securityContext:
+  containerSecurityContext:
     runAsNonRoot: true
     runAsUser: 7474
     runAsGroup: 7474
