@@ -7,9 +7,11 @@ neo4j-standalone:
     runAsUser: 7474
     runAsGroup: 7474
     fsGroup: 7474
+
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
     capabilities:
       drop: ['ALL']
-    allowPrivilegeEscalation: false
 
   neo4j:
     labels:
