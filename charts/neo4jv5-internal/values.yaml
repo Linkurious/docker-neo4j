@@ -10,8 +10,8 @@ neo4j:
 
   containerSecurityContext:
     allowPrivilegeEscalation: false
-    # capabilities:
-    #   drop: ['ALL']
+    capabilities:
+      drop: ['ALL']
 
   neo4j:
     name: neo4jv5-internal
