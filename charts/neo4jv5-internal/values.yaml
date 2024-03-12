@@ -2,14 +2,16 @@
 
 neo4j:
 
-  containerSecurityContext:
+  securityContext:
     runAsNonRoot: true
     runAsUser: 7474
     runAsGroup: 7474
     fsGroup: 7474
+
+  containerSecurityContext:
     allowPrivilegeEscalation: false
-    # capabilities:
-    #   drop: ['ALL']
+    capabilities:
+      drop: ['ALL']
 
   neo4j:
     name: neo4jv5-internal
