@@ -72,7 +72,7 @@ neo4j:
   podSpec:
     initContainers:
       - name: git-sync
-        image: registry.k8s.io/git-sync/git-sync:v3.6.9
+        image: registry.k8s.io/git-sync/git-sync:v4.2.1
         env:
         - name: GIT_SYNC_REPO
           value: https://github.com/Linkurious/docker-neo4j
