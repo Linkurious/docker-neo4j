@@ -35,8 +35,8 @@ neo4j:
           "neo4j_version": "5.9.0"
         },
         {
-          "name": "fincrime-sales-2.0.2",
-          "neo4j_version": "5.4.0"
+          "name": "fincrime-sales-2.0.5",
+          "neo4j_version": "5.12.0"
         },
         {
           "name": "supply-chain-risk-management-2.0.2",
