@@ -88,6 +88,10 @@ neo4j:
       - name: neo4j-restore
           # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
         command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ['ALL']
         envFrom:
           - secretRef:
               name: neo4j-nexus-dataset-secret # imports NEXUS_TOKEN
