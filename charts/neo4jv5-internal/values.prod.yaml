@@ -73,10 +73,6 @@ neo4j:
         {
           "name": "network-management-2.0.0",
           "neo4j_version": "5.14.0"
-        },
-        {
-          "name": "nato-sabotage-attack-2.0.0",
-          "neo4j_version": "5.14.0"
         }
       ]
 
