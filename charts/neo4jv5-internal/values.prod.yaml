@@ -71,7 +71,7 @@ neo4j:
           "neo4j_version": "5.5.0"
         },
         {
-          "name": "network-management-2.0.0",
+          "name": "network-management-2.0.1",
           "neo4j_version": "5.14.0"
         }
       ]
