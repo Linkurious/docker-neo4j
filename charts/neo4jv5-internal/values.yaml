@@ -3,6 +3,7 @@
 neo4j:
 
   securityContext:
+    allowPrivilegeEscalation: false
     runAsNonRoot: true
     runAsUser: 7474
     runAsGroup: 7474
