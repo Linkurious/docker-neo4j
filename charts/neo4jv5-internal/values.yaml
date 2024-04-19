@@ -72,6 +72,10 @@ neo4j:
   podSpec:
     initContainers:
       - name: git-sync
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ['ALL']
         image: registry.k8s.io/git-sync/git-sync:v3.6.9
         env:
         - name: GIT_SYNC_REPO
@@ -86,6 +90,10 @@ neo4j:
           - name: data
             mountPath: /tmp/git/
       - name: neo4j-restore
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ['ALL']
         # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
         command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
         envFrom:
