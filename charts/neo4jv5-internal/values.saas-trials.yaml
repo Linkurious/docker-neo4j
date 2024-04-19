@@ -1,4 +1,20 @@
+# https://github.com/neo4j/helm-charts/blob/dev/neo4j/values.yaml
+
 neo4j:
+
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 7474
+    runAsGroup: 7474
+    fsGroup: 7474
+    seccompProfile:
+      type: RuntimeDefault
+
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ['ALL']
+
   disableLookups: true
   neo4j:
     name: neo4jv5-internal
