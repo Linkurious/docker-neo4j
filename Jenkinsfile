@@ -4,6 +4,7 @@ dockerJob {
   // General
   projectName = "linkurious/docker-neo4j"
   podTemplateNames = ['jnlp-agent']
+  buildkitBuilder = true
 
   // helmReleaseBranch = "develop"
 
