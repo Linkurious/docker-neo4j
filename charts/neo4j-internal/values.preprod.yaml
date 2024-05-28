@@ -1,4 +1,20 @@
+# https://github.com/neo4j/helm-charts/blob/dev/neo4j/values.yaml
+
 neo4j-standalone:
+
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 7474
+    runAsGroup: 7474
+    fsGroup: 7474
+    seccompProfile:
+      type: RuntimeDefault
+
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ['ALL']
+
   neo4j:
     resources:
       requests:
@@ -38,6 +54,10 @@ neo4j-standalone:
   podSpec:
     initContainers:
       - name: git-sync
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ['ALL']
         image: k8s.gcr.io/git-sync/git-sync:v3.5.0
         env:
         - name: GIT_SYNC_REPO
@@ -52,7 +72,11 @@ neo4j-standalone:
           - name: data
             mountPath: /tmp/git/
       - name: neo4j-restore
-          # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ['ALL']
+        # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
         command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
         envFrom:
           - secretRef:
