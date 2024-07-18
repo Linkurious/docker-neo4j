@@ -49,6 +49,10 @@ neo4j:
         {
           "name": "fincrime-2.0.0",
           "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "icij-senzing-2.0.0",
+          "neo4j_version": "5.14.0"
         }
       ]
 
