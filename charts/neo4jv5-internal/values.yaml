@@ -67,7 +67,7 @@ neo4j:
       ]
 
   env:
-    NEO4JLABS_PLUGINS: '["apoc"]'
+    NEO4J_PLUGINS: '["apoc","graph-data-science"]'
 
   podSpec:
     initContainers:
