@@ -50,6 +50,7 @@ neo4j:
     dbms.security.oidc.azure.authorization.group_to_role_mapping: |
       "898f17fd-e481-4f80-a578-8d25b0774206" = admin; \
       "644873fa-c49b-416b-800f-c40b55ccca9e" = reader
+    dbms.security.procedures.unrestricted: 'gds.*,apoc.*'
     metrics.prometheus.enabled: 'true'
     server.metrics.prometheus.enabled: 'true'
     server.metrics.prometheus.endpoint: '0.0.0.0:2004'
