@@ -33,7 +33,7 @@ neo4j:
     edition: "enterprise"
     acceptLicenseAgreement: "yes"
   config:
-    # server.bolt.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:7687
+    server.bolt.advertised_address:  neo4jv5-pr-146.neo4j-preprod.k8s.dev.linkurious.net:7687
     server.https.advertised_address: neo4jv5-pr-146.neo4j-preprod.k8s.dev.linkurious.net:443
     server.config.strict_validation: "false"
     dbms.security.authentication_providers: oidc-azure,native
