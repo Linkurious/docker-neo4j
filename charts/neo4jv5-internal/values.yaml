@@ -41,7 +41,7 @@ neo4j:
     dbms.security.oidc.azure.display_name: Azure
     dbms.security.oidc.azure.auth_flow: pkce
     dbms.security.oidc.azure.well_known_discovery_uri: https://login.microsoftonline.com/9c0acfe4-4dba-44f4-b8ae-c39d9aa8d991/v2.0/.well-known/openid-configuration
-    dbms.security.oidc.azure.audience: 53d9ec2c-b8dd-4e1e-96a2-b9c484205353
+    #dbms.security.oidc.azure.audience: 53d9ec2c-b8dd-4e1e-96a2-b9c484205353
     dbms.security.oidc.azure.claims.username: email
     dbms.security.oidc.azure.claims.groups: groups
     dbms.security.oidc.azure.issuer: https://sts.windows.net/9c0acfe4-4dba-44f4-b8ae-c39d9aa8d991/
