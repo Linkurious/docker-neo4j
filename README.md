@@ -167,7 +167,7 @@ We provide a script automating retrieving a backup from a given instance running
 ```sh
 export dataset_name=fincrime-sales
 export dataset_version=1.0.0
-curl -L -v --user user@linkurio.us:${USER_PWD} --upload-file ${dataset_name}-${dataset_version}.tgz https://nexus3.linkurious.net/repository/datasets/com/linkurious/neo4j/4.2.4/${dataset_name}/${dataset_name}-${dataset_version}.tgz
+curl -L -v --user user@linkurio.us:${USER_PWD} --upload-file ${dataset_name}-${dataset_version}.backup https://nexus3.linkurious.net/repository/datasets/com/linkurious/neo4j/5.24.21/${dataset_name}/${dataset_name}-${dataset_version}.backup
 ```
 
 ## Download dataset
