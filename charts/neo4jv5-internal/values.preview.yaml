@@ -1,0 +1,7 @@
+neo4j:
+  config:
+    # Devops, Engineering
+    dbms.security.oidc.azure.authorization.group_to_role_mapping: |
+      "898f17fd-e481-4f80-a578-8d25b0774206" = admin; \
+      "d41f1b69-a7dd-47fb-a1f6-977031b1971f" = admin;
+
