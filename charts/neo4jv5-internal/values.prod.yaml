@@ -89,6 +89,14 @@ neo4j:
         {
           "name": "network-management-2.0.1",
           "neo4j_version": "5.14.0"
+        },
+        {
+          "name": "digital-twin-1.0.0",
+          "neo4j_version": "1.0.0"
+        },
+        {
+          "name": "money-mules-1.0.0",
+          "neo4j_version": "1.0.0"
         }
       ]
 
