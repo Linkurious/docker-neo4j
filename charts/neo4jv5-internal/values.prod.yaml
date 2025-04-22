@@ -95,6 +95,10 @@ neo4j:
           "neo4j_version": "5.24.21"
         },
         {
+          "name": "icij-senzing-3.1.0",
+          "neo4j_version": "5.24.21"
+        },
+        {
           "name": "digital-twin-1.0.0",
           "neo4j_version": "5.24.21"
         },
