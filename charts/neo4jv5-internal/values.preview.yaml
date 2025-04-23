@@ -1,4 +1,9 @@
 neo4j:
+  neo4j:
+    # Uncomment to set the initial password
+    # password: "my-initial-password"
+    passwordFromSecret: ""
+
   config:
     # Devops, Engineering
     dbms.security.oidc.azure.authorization.group_to_role_mapping: |
