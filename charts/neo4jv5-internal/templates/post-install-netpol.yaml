@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: "{{.Release.Name}}"-job
+  name: "{{.Release.Name}}-job"
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "neo4j-lke.labels" . | nindent 4 }}
