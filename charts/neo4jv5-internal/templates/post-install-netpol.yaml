@@ -13,9 +13,9 @@ spec:
   policyTypes:
     - Egress
   egress:
-      - to:
-          podSelector:
-            matchLabels:
-              {{- include "neo4j-lke.labels" . | nindent 12 }}
-        ports:
-        - port: 7687
+    - to:
+      - podSelector:
+          matchLabels:
+            {{- include "neo4j-lke.labels" . | nindent 12 }}
+      ports:
+      - port: 7687
