@@ -9,7 +9,7 @@ spec:
   # https://editor.cilium.io/?id=rGvdpkpvU1mnl2Ct
   podSelector:
       matchLabels:
-        {{- include "neo4j-lke.labels" . | nindent 12 }}
+        {{- include "neo4j-lke.selectorLabels" . | nindent 12 }}
   policyTypes:
     - Egress
     - Ingress
@@ -17,11 +17,11 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-            {{- include "neo4j-lke.labels" . | nindent 12 }}
+            {{- include "neo4j-lke.selectorLabels" . | nindent 12 }}
   egress:
     - to:
       - podSelector:
           matchLabels:
-            {{- include "neo4j-lke.labels" . | nindent 12 }}
+            {{- include "neo4j-lke.selectorLabels" . | nindent 12 }}
       ports:
       - port: 7687
