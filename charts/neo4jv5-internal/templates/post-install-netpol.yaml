@@ -12,6 +12,12 @@ spec:
         {{- include "neo4j-lke.labels" . | nindent 12 }}
   policyTypes:
     - Egress
+    - Ingress
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            {{- include "neo4j-lke.labels" . | nindent 12 }}
   egress:
     - to:
       - podSelector:
