@@ -56,7 +56,7 @@ neo4j:
         },
         {
           "name": "icij-senzing-2.0.0",
-          "neo4j_version": "5.24.21"
+          "neo4j_version": "5.14.0"
         }
       ]
 
