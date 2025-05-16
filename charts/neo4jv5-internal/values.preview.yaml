@@ -1,8 +1,4 @@
 neo4j:
-  neo4j:
-    # Uncomment to set the initial password
-    # password: "my-initial-password"
-    passwordFromSecret: ""
 
   config:
     # Devops, Engineering
