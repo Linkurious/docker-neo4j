@@ -1,4 +1,5 @@
 neo4j:
+
   config:
     # Devops, Engineering
     dbms.security.oidc.azure.authorization.group_to_role_mapping: |

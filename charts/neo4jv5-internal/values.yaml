@@ -1,6 +1,7 @@
 # https://github.com/neo4j/helm-charts/blob/dev/neo4j/values.yaml
 
 neo4j:
+  disableLookups: true
 
   securityContext:
     runAsNonRoot: true
