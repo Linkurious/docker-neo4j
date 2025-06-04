@@ -20,10 +20,10 @@ neo4j:
     name: neo4jv5-internal
     resources:
       requests:
-        cpu: 1000m
+        cpu: 2000m
         memory: "5Gi"
       limits:
-        cpu: 2000m
+        cpu: 3000m
         memory: "5Gi"
 
     # Uncomment to set the initial password
