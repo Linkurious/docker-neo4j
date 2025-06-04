@@ -21,7 +21,7 @@ neo4j:
     resources:
       requests:
         cpu: 2000m
-        memory: "5Gi"
+        memory: "3Gi"
       limits:
         cpu: 3000m
         memory: "5Gi"
