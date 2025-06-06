@@ -5,10 +5,9 @@ version_settings(constraint='>=0.30.8')
 
 load('ext://kubectl_build', 'kubectl_build')
 load('ext://helm_resource', 'helm_resource', 'helm_repo')
-# default_registry('prepush.docker.nexus3.vpc.prod.scw-par1.linkurious.net')
 
 ctx = k8s_context()
-if ctx.endswith('k8s-dev'):
+if ctx.endswith('k8s-preprod'):
   allow_k8s_contexts(ctx)
 
 if not k8s_namespace().endswith("dev"):
@@ -16,7 +15,7 @@ if not k8s_namespace().endswith("dev"):
 builder = "builder-" + k8s_namespace()
 
 neo4j_workload_name = 'neo4jv5'
-neo4j_release_name = ctx.removesuffix('@k8s-dev') + '-tilt-neo4jv5'
+neo4j_release_name = ctx.removesuffix('@k8s-preprod') + '-tilt-neo4jv5'
 helm_resource(
   name=neo4j_workload_name,
   release_name=neo4j_release_name,
@@ -29,6 +28,6 @@ helm_resource(
   )
 k8s_resource(workload=neo4j_workload_name,
   links=[
-      neo4j_release_name + '.neo4j-dev.k8s.dev.linkurious.net',
+      neo4j_release_name + '.neo4j-dev.k8s.preprod.linkurious.net',
   ]
 )
