@@ -20,11 +20,11 @@ neo4j:
     name: neo4jv5-internal
     resources:
       requests:
-        cpu: 1000m
-        memory: "2Gi"
-      limits:
         cpu: 2000m
-        memory: "2Gi"
+        memory: "5Gi"
+      limits:
+        cpu: 3000m
+        memory: "5Gi"
 
     # Uncomment to set the initial password
     # password: "my-initial-password"
@@ -53,6 +53,10 @@ neo4j:
         {
           "name": "icij-senzing-3.0.0",
           "neo4j_version": "5.24.21"
+        },
+        {
+          "name": "icij-senzing-2.0.0",
+          "neo4j_version": "5.14.0"
         }
       ]
 
