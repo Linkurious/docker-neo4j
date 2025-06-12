@@ -21,10 +21,10 @@ neo4j:
     resources:
       requests:
         cpu: 2000m
-        memory: "7Gi"
+        memory: "6Gi"
       limits:
         cpu: 3000m
-        memory: "7Gi"
+        memory: "6Gi"
 
     # Uncomment to set the initial password
     # password: "my-initial-password"
