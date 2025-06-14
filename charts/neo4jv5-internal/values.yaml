@@ -35,8 +35,8 @@ neo4j:
     acceptLicenseAgreement: "yes"
 
   config:
-    # server.bolt.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:7687
-    # server.https.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:443
+    server.bolt.advertised_address:  neo4jv5-pr-146.neo4j-preprod.k8s.dev.linkurious.net:7687
+    server.https.advertised_address: neo4jv5-pr-146.neo4j-preprod.k8s.dev.linkurious.net:443
     server.config.strict_validation: "false"
     dbms.security.authentication_providers: oidc-azure,native
     dbms.security.authorization_providers: oidc-azure,native
@@ -46,8 +46,10 @@ neo4j:
     dbms.security.oidc.azure.audience: 53d9ec2c-b8dd-4e1e-96a2-b9c484205353
     dbms.security.oidc.azure.claims.username: email
     dbms.security.oidc.azure.claims.groups: groups
-    dbms.security.oidc.azure.params: "client_id=53d9ec2c-b8dd-4e1e-96a2-b9c484205353;response_type=code;scope=openid profile email"
-    dbms.security.oidc.azure.config: "token_type_principal=id_token;token_type_authentication=id_token"
+    #dbms.security.oidc.azure.issuer: https://sts.windows.net/9c0acfe4-4dba-44f4-b8ae-c39d9aa8d991/
+    dbms.security.oidc.azure.params: "client_id=53d9ec2c-b8dd-4e1e-96a2-b9c484205353;response_type=code;scope=openid profile email api://53d9ec2c-b8dd-4e1e-96a2-b9c484205353/access-token"
+    dbms.security.oidc.azure.config: "principal=email;code_challenge_method=S256;token_type_principal=access_token;token_type_authentication=access_token"
+    dbms.security.oidc.azure.token_endpoint: https://login.microsoftonline.com/9c0acfe4-4dba-44f4-b8ae-c39d9aa8d991/oauth2/v2.0/token
     # Devops, Lke Team
     dbms.security.oidc.azure.authorization.group_to_role_mapping: |
       "898f17fd-e481-4f80-a578-8d25b0774206" = admin; \
