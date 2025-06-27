@@ -15,6 +15,7 @@ neo4j-standalone:
     capabilities:
       drop: ['ALL']
 
+  disableLookups: true
   neo4j:
     resources:
       requests:
