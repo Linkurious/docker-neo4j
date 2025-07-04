@@ -13,7 +13,7 @@ set -x
 # Main
 ##########
 path='/tmp'
-namespace='neo4j-preprod'
+namespace=$(kubectl get pods --all-namespaces -l helm.neo4j.com/pod_category=neo4j-instance -o jsonpath='{range .items[*]}{.metadata.namespace}{"\n"}{end}' | sort -u | fzf)
 neo4j_pod=$(kubectl get pods -n "${namespace}" --no-headers -o custom-columns=':metadata.name' | fzf)
 database=$(kubectl exec -it -n "${namespace}" "$neo4j_pod" -c "neo4j" -- sh -c 'neo4j-admin database info --format=json' | jq -r '.[].databaseName' | fzf)
 echo "${database}"
