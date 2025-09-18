@@ -5,7 +5,7 @@ lkeSubReleaseJob {
   projectName = "linkurious/docker-neo4j"
 
   releaseType = 'docker'
-  reviewers = "Linkurious/devops"
+  reviewers = "Linkurious/devopschapter"
 
   runAssetWaiter = true
 
