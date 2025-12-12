@@ -16,6 +16,8 @@ path='/tmp'
 namespace=$(kubectl get pods --all-namespaces -l helm.neo4j.com/pod_category=neo4j-instance -o jsonpath='{range .items[*]}{.metadata.namespace}{"\n"}{end}' | sort -u | fzf)
 neo4j_pod=$(kubectl get pods -n "${namespace}" --no-headers -o custom-columns=':metadata.name' | fzf)
 database=$(kubectl exec -it -n "${namespace}" "$neo4j_pod" -c "neo4j" -- sh -c 'neo4j-admin database info --format=json' | jq -r '.[].databaseName' | fzf)
+dataset_name=${database%-*}
+dataset_version="${database##*-}"
 echo "${database}"
 kubectl exec -it -n ${namespace} "$neo4j_pod" -c "neo4j" -- sh -c "exec /var/lib/neo4j/bin/neo4j-admin database backup ${database} --to-path=${path} --type=full --verbose"
 
@@ -25,3 +27,9 @@ kubectl exec -t -n "${namespace}" "$neo4j_pod" -c "neo4j" -- bash -c "mv ${path}
 kubectl cp --retries=-1 "${namespace}/${neo4j_pod}:${path}/${database}.backup" "/tmp/${database}.backup"
 #we check local file
 ls -lah "/tmp/$database.backup"
+echo "If you want to upload:"
+
+echo "export dataset_name=$dataset_name"
+echo "export dataset_version=$dataset_version"
+echo 'curl -L -v --user ${USER_EMAIL}:${USER_PWD} --upload-file /tmp/${dataset_name}-${dataset_version}.backup https://nexus3.linkurious.net/repository/datasets/com/linkurious/neo4j/5.26.28/${dataset_name}/${dataset_name}-${dataset_version}.backup'
+
