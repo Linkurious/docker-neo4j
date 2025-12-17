@@ -15,6 +15,7 @@ neo4j-standalone:
     capabilities:
       drop: ['ALL']
 
+  disableLookups: true
   neo4j:
     resources:
       requests:
@@ -26,6 +27,7 @@ neo4j-standalone:
 
     # Uncomment to set the initial password
     # password: "my-initial-password"
+    passwordFromSecret: "neo4j-v4small-auth"
 
     # Uncomment to use enterprise edition
     edition: "enterprise"
