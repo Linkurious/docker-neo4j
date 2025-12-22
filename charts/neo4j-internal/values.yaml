@@ -86,7 +86,7 @@ neo4j-standalone:
           allowPrivilegeEscalation: false
           capabilities:
             drop: ['ALL']
-        image: neo4j:4.4.46-enterprise
+        image: neo4j:5.26.19-enterprise
           # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
         command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
         envFrom:
