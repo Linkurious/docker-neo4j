@@ -3,16 +3,22 @@
   "extends": [
     "local>Linkurious/renovate-config",
     "github>Linkurious/renovate-config:meta",
-    "regexManagers:dockerfileVersions"
+    "customManagers:dockerfileVersions"
   ],
-  "baseBranches": ["develop"],
+  "baseBranchPatterns": [
+    "develop"
+  ],
   "packageRules": [
     {
-      "managers": ["helmv3"],
-      "additionalBranchPrefix": "{{baseDir}}-",
-      "commitMessageSuffix": "{{baseDir}}-",
+      "matchManagers": [
+        "helmv3"
+      ],
+      "additionalBranchPrefix": "{{packageFileDir}}-",
+      "commitMessageSuffix": "{{packageFileDir}}-",
       "bumpVersion": "patch",
-      "packagePatterns": [".*"]
+      "matchPackageNames": [
+        "/.*/"
+      ]
     }
   ]
 }
