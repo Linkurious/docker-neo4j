@@ -18,7 +18,7 @@ helm upgrade --install --namespace=neo4j-dev neo4j-enys neo4j/neo4j -f neo4j-val
 To use our internal chart, with preprod values:
 
 ```bash
-helm upgrade --install --namespace=neo4j-dev neo4j-enys charts/neo4jv5-internal -f charts/neo4jv5-internal/values.preprod.yaml --render-subchart-notes
+helm upgrade --install --namespace=neo4j-dev neo4j-enys charts/neo4jv2025-internal -f charts/neo4jv2025-internal/values.preprod.yaml --render-subchart-notes
 ```
 
 ## Restoring data
