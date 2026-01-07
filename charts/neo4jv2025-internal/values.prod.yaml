@@ -17,7 +17,7 @@ neo4j:
 
   disableLookups: true
   neo4j:
-    name: neo4jv5-internal
+    name: neo4jv2025-internal
     resources:
       requests:
         cpu: 1000m
