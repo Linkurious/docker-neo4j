@@ -1,0 +1,102 @@
+# https://github.com/neo4j/helm-charts/blob/dev/neo4j/values.yaml
+
+neo4j:
+
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 7474
+    runAsGroup: 7474
+    fsGroup: 7474
+    seccompProfile:
+      type: RuntimeDefault
+
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ['ALL']
+
+  disableLookups: true
+  neo4j:
+    name: neo4jv5-internal
+    resources:
+      requests:
+        cpu: 1000m
+        memory: "2Gi"
+      limits:
+        cpu: 2000m
+        memory: "2Gi"
+
+    # Uncomment to set the initial password
+    # password: "my-initial-password"
+    passwordFromSecret: "neo4j-admin-auth"
+
+    # Uncomment to use enterprise edition
+    edition: "enterprise"
+    acceptLicenseAgreement: "yes"
+  config:
+    dbms.security.oidc.azure.audience: 0d51e3f5-5053-4d39-81f2-a49ba2978e69
+    dbms.security.oidc.azure.params: "client_id=0d51e3f5-5053-4d39-81f2-a49ba2978e69;response_type=code;scope=openid profile email"
+    dbms.security.oidc.azure.authorization.group_to_role_mapping: |
+      "898f17fd-e481-4f80-a578-8d25b0774206" = admin;
+
+    # used to workaround lack of config in helm chart
+    DATASETS_JSON: |-
+      [
+        {
+          "name": "aml-2.0.1",
+          "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "cybersecurity-2.0.0",
+          "neo4j_version": "5.9.0"
+        },
+        {
+          "name": "fincrime-sales-2.0.2",
+          "neo4j_version": "5.4.0"
+        },
+        {
+          "name": "supply-chain-risk-management-2.0.2",
+          "neo4j_version": "5.5.0"
+        },
+        {
+          "name": "nato-sabotage-attack-2.0.0",
+          "neo4j_version": "5.14.0"
+        }
+      ]
+
+  podSpec:
+    initContainers:
+      - name: git-sync
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ['ALL']
+        image: k8s.gcr.io/git-sync/git-sync:v3.6.2
+        env:
+        - name: GIT_SYNC_REPO
+          value: https://github.com/Linkurious/docker-neo4j
+        - name: GIT_SYNC_DEST
+          value: docker-neo4j
+        - name: GIT_SYNC_BRANCH
+          value: develop
+        - name: GIT_SYNC_ONE_TIME
+          value: 'true'
+        volumeMounts:
+          - name: data
+            mountPath: /tmp/git/
+      - name: neo4j-restore
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ['ALL']
+        # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
+        command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
+        envFrom:
+          - secretRef:
+              name: neo4j-saas-nexus-dataset # imports NEXUS_TOKEN
+        volumeMounts:
+          - name: data
+            mountPath: /data/
+          - name: neo4j-conf
+            mountPath: "/config/neo4j.conf"
+

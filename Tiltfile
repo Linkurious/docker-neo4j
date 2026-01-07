@@ -14,13 +14,13 @@ if not k8s_namespace().endswith("dev"):
   fail("You are not targeting a dev namespace")
 builder = "builder-" + k8s_namespace()
 
-neo4j_workload_name = 'neo4jv5'
-neo4j_release_name = ctx.removesuffix('@k8s-preprod') + '-tilt-neo4jv5'
+neo4j_workload_name = 'neo4jv2025'
+neo4j_release_name = ctx.removesuffix('@k8s-preprod') + '-tilt-neo4jv2025'
 helm_resource(
   name=neo4j_workload_name,
   release_name=neo4j_release_name,
-  chart='charts/neo4jv5-internal',
-  deps=['charts/neo4jv5-internal'],
+  chart='charts/neo4jv2025-internal',
+  deps=['charts/neo4jv2025-internal'],
   namespace='neo4j-dev',
   flags=['--render-subchart-notes']
   # image_deps=['linkurious-server'],

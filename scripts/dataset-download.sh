@@ -163,7 +163,7 @@ function restore_database {
          --to-data-tx-directory "${data_folder_prefix}/data/transactions/" \
          --move \
          --verbose)
-    if [[  "$neo4j_major" == "5" ]]; then
+    if [[  "$neo4j_major" == "5" || "$neo4j_major" == "2025" ]]; then
         neo4j_restore_params=(database restore \
             --from-path="$RESTORE_FROM" \
             --to-path-data "${data_folder_prefix}/data/databases/" \
@@ -224,8 +224,9 @@ nexus_token="$NEXUS_TOKEN"
 data_folder_prefix=""
 neo4j_version=$(neo4j --version)
 neo4j_major=${neo4j_version%%.*}
+echo "Extracted neo4j_major: ${neo4j_major}"
 dataset_extension='.tgz'
-if [[  "$neo4j_major" == "5" ]]; then
+if [[  "$neo4j_major" == "5" || "$neo4j_major" == "2025" ]]; then
 dataset_extension='.backup'
 fi
 
