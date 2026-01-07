@@ -68,7 +68,7 @@ neo4j-standalone:
           allowPrivilegeEscalation: false
           capabilities:
             drop: ['ALL']
-        image: registry.k8s.io/git-sync/git-sync:v3.6.9
+        image: registry.k8s.io/git-sync/git-sync:v4.5.1
         env:
         - name: GIT_SYNC_REPO
           value: https://github.com/Linkurious/docker-neo4j
@@ -86,7 +86,7 @@ neo4j-standalone:
           allowPrivilegeEscalation: false
           capabilities:
             drop: ['ALL']
-        image: neo4j:4.4.25-enterprise
+        image: neo4j:4.4.46-enterprise
           # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
         command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
         envFrom:
