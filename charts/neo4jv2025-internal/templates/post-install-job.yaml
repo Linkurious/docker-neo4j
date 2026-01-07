@@ -22,7 +22,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: post-install-job
-        image: "neo4j:{{ .Chart.AppVersion }}"
+        image: "neo4j:{{ .Chart.AppVersion }}-enterprise"
           # command: ["/bin/sleep","{{default "100" .Values.sleepyTime}}"]
         command:
           - /bin/bash

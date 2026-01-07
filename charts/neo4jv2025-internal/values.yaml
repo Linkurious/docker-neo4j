@@ -37,7 +37,7 @@ neo4j:
   config:
     # server.bolt.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:7687
     # server.https.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:443
-    server.config.strict_validation: "false"
+    server.config.strict_validation.enabled: "false"
     dbms.security.authentication_providers: oidc-azure,native
     dbms.security.authorization_providers: oidc-azure,native
     dbms.security.oidc.azure.display_name: Azure
@@ -53,7 +53,6 @@ neo4j:
       "898f17fd-e481-4f80-a578-8d25b0774206" = admin; \
       "644873fa-c49b-416b-800f-c40b55ccca9e" = reader
     dbms.security.procedures.unrestricted: 'gds.*,apoc.*'
-    metrics.prometheus.enabled: 'true'
     server.metrics.prometheus.enabled: 'true'
     server.metrics.prometheus.endpoint: '0.0.0.0:2004'
 
@@ -96,8 +95,8 @@ neo4j:
           value: https://github.com/Linkurious/docker-neo4j
         - name: GITSYNC_LINK
           value: docker-neo4j
-        - name: GITSYNC_BRANCH
-          value: develop
+        - name: GITSYNC_REF
+          value: feature/OPS-1200
         - name: GITSYNC_ONE_TIME
           value: 'true'
         volumeMounts:
