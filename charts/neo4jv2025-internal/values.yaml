@@ -1,0 +1,162 @@
+# https://github.com/neo4j/helm-charts/blob/dev/neo4j/values.yaml
+
+neo4j:
+  disableLookups: true
+
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 7474
+    runAsGroup: 7474
+    fsGroup: 7474
+    seccompProfile:
+      type: RuntimeDefault
+
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ['ALL']
+
+  neo4j:
+    name: neo4jv2025-internal
+    labels:
+      app.kubernetes.io/name: "neo4jv2025-internal"
+    resources:
+      cpu: "500m"
+      memory: "2Gi"
+
+    # Uncomment to set the initial password
+    # password: "my-initial-password"
+    # passwordFromSecret: ""
+    passwordFromSecret: "neo4j-admin-auth"
+    passwordFromSecretLookup: false
+
+    # Uncomment to use enterprise edition
+    edition: "enterprise"
+    acceptLicenseAgreement: "yes"
+
+  config:
+    # server.bolt.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:7687
+    # server.https.advertised_address: neo4j-enys.neo4j-dev.k8s.dev.linkurious.net:443
+    server.config.strict_validation.enabled: "false"
+    dbms.security.authentication_providers: oidc-azure,native
+    dbms.security.authorization_providers: oidc-azure,native
+    dbms.security.oidc.azure.display_name: Azure
+    dbms.security.oidc.azure.auth_flow: pkce
+    dbms.security.oidc.azure.well_known_discovery_uri: https://login.microsoftonline.com/9c0acfe4-4dba-44f4-b8ae-c39d9aa8d991/v2.0/.well-known/openid-configuration
+    dbms.security.oidc.azure.audience: 53d9ec2c-b8dd-4e1e-96a2-b9c484205353
+    dbms.security.oidc.azure.claims.username: email
+    dbms.security.oidc.azure.claims.groups: groups
+    dbms.security.oidc.azure.params: "client_id=53d9ec2c-b8dd-4e1e-96a2-b9c484205353;response_type=code;scope=openid profile email"
+    dbms.security.oidc.azure.config: "token_type_principal=id_token;token_type_authentication=id_token"
+    # Devops, Lke Team
+    dbms.security.oidc.azure.authorization.group_to_role_mapping: |
+      "898f17fd-e481-4f80-a578-8d25b0774206" = admin; \
+      "644873fa-c49b-416b-800f-c40b55ccca9e" = reader
+    dbms.security.procedures.unrestricted: 'gds.*,apoc.*'
+    server.metrics.prometheus.enabled: 'true'
+    server.metrics.prometheus.endpoint: '0.0.0.0:2004'
+
+    # used to workaround lack of config in helm chart
+    DATASETS_JSON: |-
+      [
+        {
+          "name": "aml-2.0.1",
+          "neo4j_version": "5.3.0"
+        },
+        {
+          "name": "crunchbase-2.0.0",
+          "neo4j_version": "5.3.0"
+        }
+      ]
+
+  apoc_config:
+    apoc.trigger.enabled: "true"
+
+  env:
+    NEO4J_PLUGINS: '["apoc","graph-data-science"]'
+
+  podSpec:
+    initContainers:
+      - name: git-sync
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ['ALL']
+          runAsNonRoot: true
+          runAsUser: 7474
+          runAsGroup: 7474
+          seccompProfile:
+            type: RuntimeDefault
+        image: registry.k8s.io/git-sync/git-sync:v4.5.1
+        env:
+        - name: GITSYNC_ROOT
+          value: /tmp/git/git-sync
+        - name: GITSYNC_REPO
+          value: https://github.com/Linkurious/docker-neo4j
+        - name: GITSYNC_LINK
+          value: docker-neo4j
+        - name: GITSYNC_REF
+          value: feature/OPS-1200
+        - name: GITSYNC_ONE_TIME
+          value: 'true'
+        volumeMounts:
+          - name: data
+            mountPath: /tmp/git/
+      - name: neo4j-restore
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ['ALL']
+        # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
+        command: ['/data/git-sync/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
+        envFrom:
+          - secretRef:
+              name: neo4j-nexus-dataset-secret # imports NEXUS_TOKEN
+        volumeMounts:
+          - name: data
+            mountPath: /data/
+          - name: neo4j-conf
+            mountPath: "/config/neo4j.conf"
+
+  volumes:
+    data:
+      mode: "volume"
+      volume:
+        emptyDir: {}
+  services:
+    neo4j:
+      spec:
+        type: ClusterIP
+
+  # Jvm configuration for Neo4j
+  jvm:
+    # If true any additional arguments are added after the Neo4j default jvm arguments.
+    # If false Neo4j default jvm arguments are not used.
+    useNeo4jDefaultJvmArguments: true
+    # additionalJvmArguments is a list of strings. Each jvm argument should be a separate element:
+    additionalJvmArguments:
+      - "-XX:+ExitOnOutOfMemoryError"
+    # - "-XX:+HeapDumpOnOutOfMemoryError"
+    # - "-XX:HeapDumpPath=/logs/neo4j.hprof"
+    # - "-XX:MaxMetaspaceSize=180m"
+    # - "-XX:ReservedCodeCacheSize=40m"
+
+##### Top level lke chart
+nameOverride: "neo4j"
+fullnameOverride: ""
+hostPostfix: k8s.dev.linkurious.net
+ingressRoute:
+  enabled: true
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - paths:
+        - path: /
+          pathType: ImplementationSpecific
+      # host: neo4j.k8s.dev.linkurious.net
+  tls:
+    secretName: wildcard-default-cert
+    hosts: []
+      # - chart-example.local
