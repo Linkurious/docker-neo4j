@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "{{.Release.Name}}-job"
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "neo4j-lke.labels" . | nindent 4 }}
+spec:
+  # https://editor.cilium.io/?id=rGvdpkpvU1mnl2Ct
+  podSelector:
+      matchLabels:
+        {{- include "neo4j-lke.selectorLabels" . | nindent 12 }}
+  policyTypes:
+    - Egress
+    - Ingress
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            {{- include "neo4j-lke.selectorLabels" . | nindent 12 }}
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+            {{- include "neo4j-lke.selectorLabels" . | nindent 12 }}
+      ports:
+      - port: 7687

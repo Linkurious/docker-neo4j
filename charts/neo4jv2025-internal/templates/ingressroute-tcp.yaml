@@ -1,0 +1,40 @@
+{{- if .Values.ingressRoute.enabled -}}
+{{- $fullName := include "neo4j-lke.fullname" . -}}
+{{- $svcPort := "tcp-bolt" -}}
+{{- $defaultHostUrl := include "neo4j-lke.defaultHostUrl" . -}}
+{{- if and .Values.ingressRoute.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.ingressRoute.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.ingressRoute.annotations "kubernetes.io/ingress.class" .Values.ingressRoute.className}}
+  {{- end }}
+{{- end }}
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: {{ $fullName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "neo4j-lke.labels" . | nindent 4 }}
+  {{- with .Values.ingressRoute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if and .Values.ingressRoute.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.ingressRoute.className }}
+  {{- end }}
+  entryPoints:
+    - tcpsecure
+  {{- if .Values.ingressRoute.tls }}
+  tls:
+    secretName: {{ .Values.ingressRoute.tls.secretName }}
+  {{- end }}
+  routes:
+    {{- range .Values.ingressRoute.hosts }}
+    - match: HostSNI(`{{ .host | default $defaultHostUrl }}`)
+      services:
+        - name: {{ $fullName }}
+          port: {{ $svcPort }}
+            # middlewares:
+            #   - name: traefik-traefik-forward-auth@kubernetescrd
+    {{- end }}
+{{- end }}

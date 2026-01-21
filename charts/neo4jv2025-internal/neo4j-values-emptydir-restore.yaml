@@ -1,0 +1,53 @@
+neo4j:
+  resources:
+    cpu: "0.5"
+    memory: "2Gi"
+
+  # Uncomment to set the initial password
+  #password: "my-initial-password"
+
+  # Uncomment to use enterprise edition
+  edition: "enterprise"
+  acceptLicenseAgreement: "yes"
+
+podSpec:
+  initContainers:
+    - name: git-sync
+      image: k8s.gcr.io/git-sync/git-sync:v3.5.0
+      env:
+      - name: GIT_SYNC_REPO
+        value: https://github.com/Linkurious/docker-neo4j
+      - name: GIT_SYNC_DEST
+        value: docker-neo4j
+      - name: GIT_SYNC_BRANCH
+        value: develop
+      - name: GIT_SYNC_ONE_TIME
+        value: 'true'
+      volumeMounts:
+        - name: data
+          mountPath: /tmp/git/
+    - name: neo4j-restore
+      image: neo4j:4.4.3-enterprise
+        # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
+      command: [ '/data/docker-neo4j/scripts/dataset-download.sh']
+      env:
+        - name: DATASETS
+          value: aml-1.0.0
+        - name: DATASET_NEO4J_VERSION
+          value: 4.2.0
+      envFrom:
+        - secretRef:
+            name: neo4j-dev-nexus-dataset # imports NEXUS_TOKEN
+      volumeMounts:
+        - name: data
+          mountPath: /data/
+
+volumes:
+  data:
+    mode: "volume"
+    volume:
+      emptyDir: {}
+services:
+  neo4j:
+    spec:
+      type: ClusterIP
