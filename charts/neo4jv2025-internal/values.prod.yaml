@@ -119,15 +119,22 @@ neo4j:
           allowPrivilegeEscalation: false
           capabilities:
             drop: ['ALL']
-        image: k8s.gcr.io/git-sync/git-sync:v3.6.2
+          runAsNonRoot: true
+          runAsUser: 7474
+          runAsGroup: 7474
+          seccompProfile:
+            type: RuntimeDefault
+        image: registry.k8s.io/git-sync/git-sync:v4.5.1
         env:
-        - name: GIT_SYNC_REPO
+        - name: GITSYNC_ROOT
+          value: /tmp/git/git-sync
+        - name: GITSYNC_REPO
           value: https://github.com/Linkurious/docker-neo4j
-        - name: GIT_SYNC_DEST
+        - name: GITSYNC_LINK
           value: docker-neo4j
-        - name: GIT_SYNC_BRANCH
+        - name: GITSYNC_REF
           value: develop
-        - name: GIT_SYNC_ONE_TIME
+        - name: GITSYNC_ONE_TIME
           value: 'true'
         volumeMounts:
           - name: data
@@ -138,7 +145,7 @@ neo4j:
           capabilities:
             drop: ['ALL']
         # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
-        command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
+        command: ['/data/git-sync/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
         envFrom:
           - secretRef:
               name: neo4j-prod-nexus-dataset # imports NEXUS_TOKEN
