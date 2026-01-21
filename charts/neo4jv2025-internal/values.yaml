@@ -96,7 +96,7 @@ neo4j:
         - name: GITSYNC_LINK
           value: docker-neo4j
         - name: GITSYNC_REF
-          value: feature/OPS-1200
+          value: develop
         - name: GITSYNC_ONE_TIME
           value: 'true'
         volumeMounts:

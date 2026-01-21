@@ -56,39 +56,3 @@ neo4j:
         }
       ]
 
-  podSpec:
-    initContainers:
-      - name: git-sync
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop: ['ALL']
-        image: k8s.gcr.io/git-sync/git-sync:v3.6.2
-        env:
-        - name: GIT_SYNC_REPO
-          value: https://github.com/Linkurious/docker-neo4j
-        - name: GIT_SYNC_DEST
-          value: docker-neo4j
-        - name: GIT_SYNC_BRANCH
-          value: develop
-        - name: GIT_SYNC_ONE_TIME
-          value: 'true'
-        volumeMounts:
-          - name: data
-            mountPath: /tmp/git/
-      - name: neo4j-restore
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop: ['ALL']
-        # command: ['ls', '-lah', '/data/git-sync/', '&&', '/data/git-sync/docker-neo4j/scripts/dataset-download.sh']
-        command: ['/data/docker-neo4j/scripts/dataset-download.sh', '-p', '/data']
-        envFrom:
-          - secretRef:
-              name: neo4j-nexus-dataset-secret # imports NEXUS_TOKEN
-        volumeMounts:
-          - name: data
-            mountPath: /data/
-          - name: neo4j-conf
-            mountPath: "/config/neo4j.conf"
-
