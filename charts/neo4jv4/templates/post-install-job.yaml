@@ -38,6 +38,11 @@ spec:
             echo "Done"
         envFrom:
           - secretRef:
-              name: "{{ .Release.Name }}-auth"
+            {{- if (index .Values "neo4j-standalone").neo4j.passwordFromSecret }}
+              name: "{{ (index .Values "neo4j-standalone").neo4j.passwordFromSecret }}"
+            {{- else }}
+              name: "{{ (index .Values "neo4j-standalone").neo4j.name }}-auth"
+            {{- end }}
           - configMapRef:
               name: "{{ .Release.Name }}-user-config"
+
