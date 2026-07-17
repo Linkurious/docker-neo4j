@@ -34,10 +34,10 @@ neo4j:
     edition: "enterprise"
     acceptLicenseAgreement: "yes"
   config:
-    dbms.security.oidc.azure.audience: 0d51e3f5-5053-4d39-81f2-a49ba2978e69
-    dbms.security.oidc.azure.params: "client_id=0d51e3f5-5053-4d39-81f2-a49ba2978e69;response_type=code;scope=openid profile email"
+    dbms.security.oidc.azure.audience: 48fb6eca-ced1-486a-8399-6230963be242
+    dbms.security.oidc.azure.params: "client_id=48fb6eca-ced1-486a-8399-6230963be242;response_type=code;scope=openid profile email"
     dbms.security.oidc.azure.authorization.group_to_role_mapping: |
-      "898f17fd-e481-4f80-a578-8d25b0774206" = admin;
+      "85e901b9-1ac4-4cae-9f3c-a0a0840f5491" = admin;
 
     # used to workaround lack of config in helm chart
     DATASETS_JSON: |-
