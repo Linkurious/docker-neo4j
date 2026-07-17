@@ -24,7 +24,7 @@ version: 0.0.37
 appVersion: "5.26.8"
 dependencies:
   - name: neo4j
-    version: 5.26.24
+    version: 5.26.28
     repository: https://helm.neo4j.com/neo4j
 maintainers:
   - name: enys
