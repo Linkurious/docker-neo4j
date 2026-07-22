@@ -42,16 +42,16 @@ neo4j:
     dbms.security.authorization_providers: oidc-azure,native
     dbms.security.oidc.azure.display_name: Azure
     dbms.security.oidc.azure.auth_flow: pkce
-    dbms.security.oidc.azure.well_known_discovery_uri: https://login.microsoftonline.com/9c0acfe4-4dba-44f4-b8ae-c39d9aa8d991/v2.0/.well-known/openid-configuration
-    dbms.security.oidc.azure.audience: 53d9ec2c-b8dd-4e1e-96a2-b9c484205353
+    dbms.security.oidc.azure.well_known_discovery_uri: https://login.microsoftonline.com/a00035bc-d628-4788-97c4-bbfbf70f3e7a/v2.0/.well-known/openid-configuration
+    dbms.security.oidc.azure.audience: 163f10a2-9e7c-4ed4-859d-94cba9851ffc
     dbms.security.oidc.azure.claims.username: email
     dbms.security.oidc.azure.claims.groups: groups
-    dbms.security.oidc.azure.params: "client_id=53d9ec2c-b8dd-4e1e-96a2-b9c484205353;response_type=code;scope=openid profile email"
+    dbms.security.oidc.azure.params: "client_id=163f10a2-9e7c-4ed4-859d-94cba9851ffc;response_type=code;scope=openid profile email"
     dbms.security.oidc.azure.config: "token_type_principal=id_token;token_type_authentication=id_token"
     # Devops, Lke Team
     dbms.security.oidc.azure.authorization.group_to_role_mapping: |
-      "898f17fd-e481-4f80-a578-8d25b0774206" = admin; \
-      "644873fa-c49b-416b-800f-c40b55ccca9e" = reader
+      "85e901b9-1ac4-4cae-9f3c-a0a0840f5491" = admin; \
+      "57d6f475-4a6c-45e1-a260-4692dc1e5d08" = reader
     dbms.security.procedures.unrestricted: 'gds.*,apoc.*'
     metrics.prometheus.enabled: 'true'
     server.metrics.prometheus.enabled: 'true'
