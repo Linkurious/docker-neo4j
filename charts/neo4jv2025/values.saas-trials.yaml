@@ -100,3 +100,5 @@ neo4j:
           - name: neo4j-conf
             mountPath: "/config/neo4j.conf"
 
+
+hostPostfix: k8s.lke-saas.linkurious.net
