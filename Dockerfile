@@ -1,1 +1,1 @@
-FROM alpine/helm:4.0.4
+FROM alpine/helm:4.2.4
