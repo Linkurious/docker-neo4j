@@ -87,7 +87,7 @@ neo4j:
           runAsGroup: 7474
           seccompProfile:
             type: RuntimeDefault
-        image: registry.k8s.io/git-sync/git-sync:v4.5.1
+        image: registry.k8s.io/git-sync/git-sync:v4.7.1
         env:
         - name: GITSYNC_ROOT
           value: /tmp/git/git-sync
