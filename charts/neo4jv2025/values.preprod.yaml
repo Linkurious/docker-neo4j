@@ -20,7 +20,7 @@ neo4j:
     name: neo4jv2025-internal
     resources:
       requests:
-        cpu: 1000m
+        cpu: 500m
         memory: "2Gi"
       limits:
         cpu: 2000m
