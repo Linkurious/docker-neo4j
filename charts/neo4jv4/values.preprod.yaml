@@ -19,7 +19,7 @@ neo4j-standalone:
   neo4j:
     resources:
       requests:
-        cpu: 1000m
+        cpu: 500m
         memory: "2Gi"
       limits:
         cpu: 2000m
